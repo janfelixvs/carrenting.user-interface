@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Rental Reservation System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="header">
+        <h1>Carrenting Service</h1>
+    </div>
+
+    <div class="content">
+        <!-- Form to Add Reservation -->
+        <h2 class="subtitle">Reserve car</h2>
+        <form id="addReservationForm">
+            <label for="startDate">Startdatum:</label>
+            <input type="datetime-local" id="startDate" name="startDate">
+
+            <label for="endDate">Enddatum:</label>
+            <input type="datetime-local" id="endDate" name="endDate">
+
+            <label for="customerID">Kunden-ID:</label>
+            <input type="number" id="customerID" name="customerID" placeholder="Kunden-ID">
+
+            <label for="carID">Fahrzeug-ID:</label>
+            <input type="number" id="carID" name="carID" placeholder="Fahrzeug-ID">
+
+            <button type="submit">Reservierung hinzufügen</button>
+        </form>
+
+        <h2 class="subtitle">Reservierungen</h2>
+        <table id="reservationsTable">
+            <thead>
+                <tr>
+                    <th>Car ID</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

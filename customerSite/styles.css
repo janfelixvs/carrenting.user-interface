@@ -1,0 +1,111 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #333;
+    color: white;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.header {
+    background-color: #222;
+    padding: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.content {
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.subtitle {
+    color: #ddd;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+input,
+button {
+    margin-top: 10px;
+    margin-right: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    width: calc(100% - 22px);
+    box-sizing: border-box;
+}
+
+input[type="number"],
+input[type="datetime-local"] {
+    background-color: #555;
+    color: white;
+}
+
+button {
+    background-color: #5C5;
+    color: black;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #6C6;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+li {
+    margin-top: 5px;
+    padding: 5px;
+    background-color: #444;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #444;
+}
+
+th,
+td {
+    padding: 10px;
+    border: 1px solid #555;
+    /* Abgrenzung der Zellen mit einer dunkleren Linie */
+    text-align: left;
+    color: #ddd;
+}
+
+thead {
+    background-color: #666;
+}
+
+th {
+    color: #fff;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #3e3e3e;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #484848;
+}
+
+tbody tr:hover {
+    background-color: #5e5e5e;
+}
