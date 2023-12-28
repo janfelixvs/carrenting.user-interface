@@ -38,48 +38,33 @@
         <div class="tables-container">
             <section class="reservation-list">
                 <h2 class="section-title">Current Reservations</h2>
-                <table>
+                <table id="currentReservationsTable">
                     <thead>
                         <tr>
+                            <th>Car Number</th>
                             <th>Start time and date</th>
                             <th>End time and date</th>
-                            <th>Car Number</th>
-                            <th>License Plate</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Sample row - replicate this with actual data -->
-                        <tr>
-                            <td>01/01/2023 10:00 AM</td>
-                            <td>01/01/2023 04:00 PM</td>
-                            <td>1234</td>
-                            <td>XYZ 5678</td>
-                        </tr>
-                        <!-- Add more rows here -->
+                        <!-- Hier werden die aktuellen Reservierungen eingefügt -->
                     </tbody>
+                    </thead>
                 </table>
             </section>
 
             <section class="reservation-list">
                 <h2 class="section-title">Past Reservations</h2>
-                <table>
+                <table id="pastReservationsTable">
                     <thead>
                         <tr>
+                            <th>Car Number</th>
                             <th>Start time and date</th>
                             <th>End time and date</th>
-                            <th>Car Number</th>
-                            <th>License Plate</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Sample row - replicate this with actual data -->
-                        <tr>
-                            <td>31/12/2022 08:00 AM</td>
-                            <td>31/12/2022 08:00 PM</td>
-                            <td>4321</td>
-                            <td>ZYX 8765</td>
-                        </tr>
-                        <!-- Add more rows here -->
+                        <!-- Hier werden die aktuellen Reservierungen eingefügt -->
                     </tbody>
                 </table>
             </section>
@@ -105,6 +90,7 @@
             window.location.href = '../welcome/welcome.html'; // Replace with the path to your logout page
         }
     </script>
+    <script src="scripts.js"></script>
 </body>
 
 </html>

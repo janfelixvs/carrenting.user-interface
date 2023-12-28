@@ -34,50 +34,48 @@ function loadReservations() {
   fetch("http://localhost:8080/api/reservation")
     .then((response) => response.json())
     .then((data) => {
-      const currentTableBody = document
+      const currentReservationsTableBody = document
         .getElementById("currentReservationsTable")
         .querySelector("tbody");
-      const pastTableBody = document
+      const pastReservationsTableBody = document
         .getElementById("pastReservationsTable")
         .querySelector("tbody");
 
       // Leeren Sie beide Tabellenkörper, bevor Sie neue Daten hinzufügen
-      currentTableBody.innerHTML = "";
-      pastTableBody.innerHTML = "";
-      console.log("test");
+      currentReservationsTableBody.innerHTML = "";
+      pastReservationsTableBody.innerHTML = "";
 
       data.forEach((reservation) => {
         let tableBody;
         const endDate = new Date(reservation.endDate);
 
         // Überprüfen Sie, ob das Enddatum in der Vergangenheit liegt
-        console.log(endDate);
-        console.log(new Date());
         if (endDate < new Date()) {
           // Fügen Sie es in die Tabelle für vergangene Reservierungen ein
-          tableBody = pastTableBody;
+          tableBody = pastReservationsTableBody;
         } else {
           // Fügen Sie es in die Tabelle für aktuelle Reservierungen ein
-          tableBody = currentTableBody;
+          tableBody = currentReservationsTableBody;
         }
 
         const row = tableBody.insertRow();
-        const cellStartDate = row.insertCell(0); // Startdatum an der ersten Position
-        const cellEndDate = row.insertCell(1); // Enddatum an der zweiten Position
-        const cellCarNumber = row.insertCell(2); // Fahrzeugnummer an der dritten Position
+        const cellCarID = row.insertCell(0);
+        const cellStartDate = row.insertCell(1);
+        const cellEndDate = row.insertCell(2);
 
+        cellCarID.textContent = reservation.carID || "N/A";
         cellStartDate.textContent = reservation.startDate
           ? new Date(reservation.startDate).toLocaleString("de-DE")
           : "N/A";
         cellEndDate.textContent = reservation.endDate
           ? new Date(reservation.endDate).toLocaleString("de-DE")
           : "N/A";
-        cellCarNumber.textContent = reservation.carID || "N/A"; // Fahrzeugnummer hier
       });
     })
     .catch((error) => {
       console.error("Error:", error);
     });
 }
-
-loadReservations();
+document.addEventListener("DOMContentLoaded", (event) => {
+  loadReservations();
+});
