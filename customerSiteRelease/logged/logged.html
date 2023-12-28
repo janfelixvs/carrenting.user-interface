@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Reservation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header class="header">
+        <img src="../resources/croppedlogo.png" alt="CarRenting Logo" class="header-logo">
+        <div class="header-info">
+            <span class="username">John Doe</span> <!-- Dynamically update this with the logged-in user's name -->
+            <button class="logout-button" onclick="logout()">Logout</button>
+        </div>
+    </header>
+
+    <main>
+        <h2 class="subtitle">Reserve car</h2>
+        <form id="addReservationForm">
+            <label for="startDate">Startdatum:</label>
+            <input type="datetime-local" id="startDate" name="startDate">
+
+            <label for="endDate">Enddatum:</label>
+            <input type="datetime-local" id="endDate" name="endDate">
+
+            <label for="customerID">Kunden-ID:</label>
+            <input type="number" id="customerID" name="customerID" placeholder="Kunden-ID">
+
+            <label for="carID">Fahrzeug-ID:</label>
+            <input type="number" id="carID" name="carID" placeholder="Fahrzeug-ID">
+
+            <button type="submit" class="submit-button">Reservierung hinzufügen</button>
+        </form>
+
+        <div class="tables-container">
+            <section class="reservation-list">
+                <h2 class="section-title">Current Reservations</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Start time and date</th>
+                            <th>End time and date</th>
+                            <th>Car Number</th>
+                            <th>License Plate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Sample row - replicate this with actual data -->
+                        <tr>
+                            <td>01/01/2023 10:00 AM</td>
+                            <td>01/01/2023 04:00 PM</td>
+                            <td>1234</td>
+                            <td>XYZ 5678</td>
+                        </tr>
+                        <!-- Add more rows here -->
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="reservation-list">
+                <h2 class="section-title">Past Reservations</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Start time and date</th>
+                            <th>End time and date</th>
+                            <th>Car Number</th>
+                            <th>License Plate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Sample row - replicate this with actual data -->
+                        <tr>
+                            <td>31/12/2022 08:00 AM</td>
+                            <td>31/12/2022 08:00 PM</td>
+                            <td>4321</td>
+                            <td>ZYX 8765</td>
+                        </tr>
+                        <!-- Add more rows here -->
+                    </tbody>
+                </table>
+            </section>
+        </div>
+        <div class="change-info-forms">
+            <h2>Change personal details</h2>
+            <form id="changeEmailForm">
+                <label for="newEmail">Neue E-Mail:</label>
+                <input type="email" id="newEmail" name="newEmail" placeholder="Neue E-Mail">
+                <button type="submit" class="change-button">E-Mail ändern</button>
+            </form>
+
+            <form id="changePasswordForm">
+                <label for="newPassword">Neues Passwort:</label>
+                <input type="password" id="newPassword" name="newPassword" placeholder="Neues Passwort">
+                <button type="submit" class="change-button">Passwort ändern</button>
+            </form>
+        </div>
+    </main>
+    <script>
+        function logout() {
+            // Redirect to the desired logout URL
+            window.location.href = '../welcome/welcome.html'; // Replace with the path to your logout page
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarRenting</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <header class="logo-header">
+            <img src="../resources/logo.png" alt="CarRenting Logo" class="logo">
+        </header>
+
+        <section class="login-section">
+            <input type="text" id="email" name="email" placeholder="Email">
+            <input type="password" id="password" name="password" placeholder="Password">
+            <button class="button login-button" onclick="login()">Log In</button>
+            <hr class="separator">
+            <input type="text" id="new-name" name="name" placeholder="Name">
+            <input type="text" id="new-email" name="new-email" placeholder="Email">
+            <input type="password" id="new-password" name="new-password" placeholder="Password">
+            <button class="button create-account">Create new account</button>
+        </section>
+        </main>
+    </div>
+
+    <script>
+        function login() {
+            // Redirect to the desired logout URL
+            window.location.href = '../logged/logged.html'; // Replace with the path to your logout page
+        }
+    </script>
+
+</body>
+
+</html>
