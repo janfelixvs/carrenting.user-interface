@@ -30,6 +30,16 @@ document
       });
   });
 
+document.getElementById('deleteAccountForm').addEventListener('submit', function (event) {
+  event.preventDefault(); // Prevent the form from submitting the default way
+
+  var email = document.getElementById('deleteEmail').value;
+  var password = document.getElementById('deletePassword').value;
+
+  deleteAccount(email, password);
+});
+
+
 function loadReservations() {
   fetch("http://localhost:8080/api/reservation")
     .then((response) => response.json())
@@ -76,6 +86,42 @@ function loadReservations() {
       console.error("Error:", error);
     });
 }
+
+function deleteAccount(email, password) {
+  // Construct the request payload
+  var payload = {
+    email: email,
+    password: password
+  };
+
+  // Send a DELETE request to your API
+  fetch('http://localhost:8082/api/customer/delete', {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  })
+    .then(response => {
+      if (response.ok) {
+        // Handle successful account deletion
+        // Maybe redirect to home page or show a success message
+      } else {
+        throw new Error('Account deletion failed');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      // Handle errors here
+      // Show an error message to the user
+    });
+}
+
+function logout() {
+  // Redirect to the desired logout URL
+  window.location.href = '../welcome/welcome.html'; // Replace with the path to your logout page
+}
+
 document.addEventListener("DOMContentLoaded", (event) => {
   loadReservations();
 });

@@ -21,21 +21,21 @@ function signUp() {
         },
         body: JSON.stringify(payload)
     })
-    .then(response => {
-        if (response.ok) {
-            return response.json();
-        } else {
-            throw new Error('Signup failed');
-        }
-    })
-    .then(data => {
-        console.log('Signup successful:', data);
-        showBanner('Signup successful!', true);
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-        showBanner('Signup failed: ' + error.message, false);
-    });
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Signup failed');
+            }
+        })
+        .then(data => {
+            console.log('Signup successful:', data);
+            showBanner('Signup successful!', true);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            showBanner('Signup failed: ' + error.message, false);
+        });
 }
 
 // Add click event listener to the signup button
@@ -60,21 +60,21 @@ function login() {
         },
         body: JSON.stringify(payload)
     })
-    .then(response => {
-        if (response.ok) {
-            return response.json();
-        } else {
-            throw new Error('Login failed');
-        }
-    })
-    .then(data => {
-        console.log('Login successful:', data);
-        // Handle successful login here (e.g., redirect to a different page)
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-        // Handle errors here (e.g., showing an error message to the user)
-    });
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Login failed');
+            }
+        })
+        .then(data => {
+            console.log('Login successful:', data);
+            window.location.href = '../logged/logged.html';
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            showBanner(error.message + ': E-Mail or Password incorrect', false);
+        });
 }
 
 function showBanner(message, isSuccess) {
@@ -84,7 +84,7 @@ function showBanner(message, isSuccess) {
     banner.style.display = 'block';
 
     // Automatically hide the banner after 3 seconds
-    setTimeout(function() {
+    setTimeout(function () {
         banner.style.display = 'none';
     }, 3000);
 }

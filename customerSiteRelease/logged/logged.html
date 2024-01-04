@@ -83,13 +83,19 @@
                 <button type="submit" class="change-button">Passwort ändern</button>
             </form>
         </div>
+        <div class="delete-account-form">
+            <h2>Delete Account</h2>
+            <form id="deleteAccountForm">
+                <label for="deleteEmail">E-Mail:</label>
+                <input type="email" id="deleteEmail" name="deleteEmail" placeholder="Your Email">
+
+                <label for="deletePassword">Password:</label>
+                <input type="password" id="deletePassword" name="deletePassword" placeholder="Your Password">
+
+                <button type="submit" class="delete-button">Delete Account</button>
+            </form>
+        </div>
     </main>
-    <script>
-        function logout() {
-            // Redirect to the desired logout URL
-            window.location.href = '../welcome/welcome.html'; // Replace with the path to your logout page
-        }
-    </script>
     <script src="scripts.js"></script>
 </body>
 

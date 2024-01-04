@@ -61,6 +61,7 @@ body {
 .change-button:hover {
     background-color: #4cae4c;
 }
+
 .header-logo {
     max-width: 100px;
     height: auto;
@@ -78,6 +79,16 @@ main {
 
 .subtitle {
     margin-bottom: 20px;
+}
+
+.delete-button {
+    background-color: red;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-weight: bold;
 }
 
 form {
