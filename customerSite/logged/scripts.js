@@ -8,7 +8,7 @@ document
     const customerID = document.getElementById("customerID").value;
     const carID = document.getElementById("carID").value;
 
-    fetch("http://localhost:8080/api/reservation", {
+    fetch("http://localhost:8083/api/reservation", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -30,18 +30,19 @@ document
       });
   });
 
-document.getElementById('deleteAccountForm').addEventListener('submit', function (event) {
-  event.preventDefault(); // Prevent the form from submitting the default way
+document
+  .getElementById("deleteAccountForm")
+  .addEventListener("submit", function (event) {
+    event.preventDefault(); // Prevent the form from submitting the default way
 
-  var email = document.getElementById('deleteEmail').value;
-  var password = document.getElementById('deletePassword').value;
+    var email = document.getElementById("deleteEmail").value;
+    var password = document.getElementById("deletePassword").value;
 
-  deleteAccount(email, password);
-});
-
+    deleteAccount(email, password);
+  });
 
 function loadReservations() {
-  fetch("http://localhost:8080/api/reservation")
+  fetch("http://localhost:8083/api/reservation")
     .then((response) => response.json())
     .then((data) => {
       const currentReservationsTableBody = document
@@ -91,37 +92,60 @@ function deleteAccount(email, password) {
   // Construct the request payload
   var payload = {
     email: email,
-    password: password
+    password: password,
   };
 
   // Send a DELETE request to your API
-  fetch('http://localhost:8082/api/customer/delete', {
-    method: 'DELETE',
+  fetch("http://localhost:8082/api/customer/delete", {
+    method: "DELETE",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(payload)
+    body: JSON.stringify(payload),
   })
-    .then(response => {
+    .then((response) => {
       if (response.ok) {
         // Handle successful account deletion
         // Maybe redirect to home page or show a success message
       } else {
-        throw new Error('Account deletion failed');
+        throw new Error("Account deletion failed");
       }
     })
-    .catch(error => {
-      console.error('Error:', error);
+    .catch((error) => {
+      console.error("Error:", error);
       // Handle errors here
       // Show an error message to the user
     });
 }
 
 function logout() {
-  // Redirect to the desired logout URL
-  window.location.href = '../welcome/welcome.html'; // Replace with the path to your logout page
+  if (stompClient !== null) {
+    stompClient.disconnect();
+    console.log("Disconnected");
+  }
+  // Weiterleitung zur Logout-Seite
+  window.location.href = "../welcome/welcome.html";
 }
 
 document.addEventListener("DOMContentLoaded", (event) => {
   loadReservations();
+
+  // Nehmen Sie an, dass die Kunden-ID verfügbar ist (z.B. aus einer Session oder einem Login-System)
+  // Dies sollte durch Ihre eigene Logik ersetzt werden, um die Kunden-ID des aktuellen Benutzers zu erhalten
+  var customerId = document.getElementById("customerID").value;
+
+  connectWebSocket(123);
 });
+
+var stompClient = null;
+
+function connectWebSocket(customerId) {
+  var socket = new SockJS("http://localhost:8085/websocket");
+  stompClient = Stomp.over(socket);
+  stompClient.connect({}, function (frame) {
+    console.log("Connected: " + frame);
+    stompClient.subscribe("/topic/messages/" + customerId, function (message) {
+      alert("Neue Nachricht: " + message.body);
+    });
+  });
+}
