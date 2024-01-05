@@ -30,28 +30,30 @@ document
       });
   });
 
-document.getElementById("updateEmailForm").addEventListener("submit", function (event) {
-  event.preventDefault();
+document
+  .getElementById("updateEmailForm")
+  .addEventListener("submit", function (event) {
+    event.preventDefault();
 
-  var oldEmail = document.getElementById("oldEmail").value;
-  var newEmail = document.getElementById("newEmail").value;
+    var oldEmail = document.getElementById("oldEmail").value;
+    var newEmail = document.getElementById("newEmail").value;
 
-  updateEmail(oldEmail, newEmail);
-});
-
-document.getElementById("changePasswordForm").addEventListener("submit", function (event) {
-  event.preventDefault();
-
-  var email = document.getElementById("email").value;
-  var oldPassword = document.getElementById("oldPassword").value;
-  var newPassword = document.getElementById("newPassword").value;
-
-  changePassword(email, oldPassword, newPassword);
-});
-
-    deleteAccount(email, password);
+    updateEmail(oldEmail, newEmail);
   });
 
+document
+  .getElementById("changePasswordForm")
+  .addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    var email = document.getElementById("email").value;
+    var oldPassword = document.getElementById("oldPassword").value;
+    var newPassword = document.getElementById("newPassword").value;
+
+    changePassword(email, oldPassword, newPassword);
+  });
+
+//deleteAccount(email, password);
 function loadReservations() {
   fetch("http://localhost:8083/api/reservation")
     .then((response) => response.json())
@@ -102,25 +104,25 @@ function loadReservations() {
 function updateEmail(oldEmail, newEmail) {
   var payload = {
     oldEmail: oldEmail,
-    newEmail: newEmail
+    newEmail: newEmail,
   };
 
   fetch(`http://localhost:8082/api/customer/update-email`, {
-    method: 'PUT',
+    method: "PUT",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(payload)
+    body: JSON.stringify(payload),
   })
-    .then(response => {
+    .then((response) => {
       if (response.ok) {
         // Handle successful email update
       } else {
-        throw new Error('Email update failed');
+        throw new Error("Email update failed");
       }
     })
-    .catch(error => {
-      console.error('Error:', error);
+    .catch((error) => {
+      console.error("Error:", error);
       // Handle errors here
     });
 }
@@ -129,25 +131,25 @@ function changePassword(email, oldPassword, newPassword) {
   var payload = {
     email: email,
     oldPassword: oldPassword,
-    newPassword: newPassword
+    newPassword: newPassword,
   };
 
   fetch(`http://localhost:8082/api/customer/change-password`, {
-    method: 'PUT',
+    method: "PUT",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(payload)
+    body: JSON.stringify(payload),
   })
-    .then(response => {
+    .then((response) => {
       if (response.ok) {
         // Handle successful password change
       } else {
-        throw new Error('Password change failed');
+        throw new Error("Password change failed");
       }
     })
-    .catch(error => {
-      console.error('Error:', error);
+    .catch((error) => {
+      console.error("Error:", error);
       // Handle errors here
     });
 }
@@ -158,8 +160,8 @@ function deleteAccount(email, password) {
     password: password,
   };
 
-  fetch('http://localhost:8082/api/customer/delete', {
-    method: 'DELETE',
+  fetch("http://localhost:8082/api/customer/delete", {
+    method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },
@@ -189,6 +191,7 @@ function logout() {
 
 document.addEventListener("DOMContentLoaded", (event) => {
   loadReservations();
+  updateCustomerName();
 
   // Nehmen Sie an, dass die Kunden-ID verfügbar ist (z.B. aus einer Session oder einem Login-System)
   // Dies sollte durch Ihre eigene Logik ersetzt werden, um die Kunden-ID des aktuellen Benutzers zu erhalten
@@ -208,4 +211,19 @@ function connectWebSocket(customerId) {
       alert("Neue Nachricht: " + message.body);
     });
   });
+}
+
+function updateCustomerName() {
+  var customerId = getCookie("customerId"); // Annahme, dass die Kunden-ID im Cookie 'customerId' gespeichert ist
+  if (customerId) {
+    document.getElementById("customerName").textContent = customerId;
+  } else {
+    document.getElementById("customerName").textContent = "Unbekannter Nutzer";
+  }
+}
+
+function getCookie(name) {
+  var value = "; " + document.cookie;
+  var parts = value.split("; " + name + "=");
+  if (parts.length == 2) return parts.pop().split(";").shift();
 }
