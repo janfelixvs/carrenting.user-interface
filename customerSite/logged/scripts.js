@@ -197,7 +197,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
   // Dies sollte durch Ihre eigene Logik ersetzt werden, um die Kunden-ID des aktuellen Benutzers zu erhalten
   var customerId = document.getElementById("customerID").value;
 
-  connectWebSocket(123);
+  connectWebSocket(getCookie("customerId"));
 });
 
 var stompClient = null;
