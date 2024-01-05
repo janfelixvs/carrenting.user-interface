@@ -30,13 +30,24 @@ document
       });
   });
 
-document
-  .getElementById("deleteAccountForm")
-  .addEventListener("submit", function (event) {
-    event.preventDefault(); // Prevent the form from submitting the default way
+document.getElementById("updateEmailForm").addEventListener("submit", function (event) {
+  event.preventDefault();
 
-    var email = document.getElementById("deleteEmail").value;
-    var password = document.getElementById("deletePassword").value;
+  var oldEmail = document.getElementById("oldEmail").value;
+  var newEmail = document.getElementById("newEmail").value;
+
+  updateEmail(oldEmail, newEmail);
+});
+
+document.getElementById("changePasswordForm").addEventListener("submit", function (event) {
+  event.preventDefault();
+
+  var email = document.getElementById("email").value;
+  var oldPassword = document.getElementById("oldPassword").value;
+  var newPassword = document.getElementById("newPassword").value;
+
+  changePassword(email, oldPassword, newPassword);
+});
 
     deleteAccount(email, password);
   });
@@ -88,16 +99,67 @@ function loadReservations() {
     });
 }
 
+function updateEmail(oldEmail, newEmail) {
+  var payload = {
+    oldEmail: oldEmail,
+    newEmail: newEmail
+  };
+
+  fetch(`http://localhost:8082/api/customer/update-email`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  })
+    .then(response => {
+      if (response.ok) {
+        // Handle successful email update
+      } else {
+        throw new Error('Email update failed');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      // Handle errors here
+    });
+}
+
+function changePassword(email, oldPassword, newPassword) {
+  var payload = {
+    email: email,
+    oldPassword: oldPassword,
+    newPassword: newPassword
+  };
+
+  fetch(`http://localhost:8082/api/customer/change-password`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  })
+    .then(response => {
+      if (response.ok) {
+        // Handle successful password change
+      } else {
+        throw new Error('Password change failed');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      // Handle errors here
+    });
+}
+
 function deleteAccount(email, password) {
-  // Construct the request payload
   var payload = {
     email: email,
     password: password,
   };
 
-  // Send a DELETE request to your API
-  fetch("http://localhost:8082/api/customer/delete", {
-    method: "DELETE",
+  fetch('http://localhost:8082/api/customer/delete', {
+    method: 'DELETE',
     headers: {
       "Content-Type": "application/json",
     },
@@ -106,7 +168,6 @@ function deleteAccount(email, password) {
     .then((response) => {
       if (response.ok) {
         // Handle successful account deletion
-        // Maybe redirect to home page or show a success message
       } else {
         throw new Error("Account deletion failed");
       }
@@ -114,7 +175,6 @@ function deleteAccount(email, password) {
     .catch((error) => {
       console.error("Error:", error);
       // Handle errors here
-      // Show an error message to the user
     });
 }
 

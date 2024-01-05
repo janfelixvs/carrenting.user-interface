@@ -73,16 +73,29 @@
         </div>
         <div class="change-info-forms">
             <h2>Change personal details</h2>
-            <form id="changeEmailForm">
-                <label for="newEmail">Neue E-Mail:</label>
-                <input type="email" id="newEmail" name="newEmail" placeholder="Neue E-Mail">
-                <button type="submit" class="change-button">E-Mail ändern</button>
+            <form id="updateEmailForm">
+                <h2>Update Email</h2>
+                <label for="oldEmail">Old Email:</label>
+                <input type="email" id="oldEmail" name="oldEmail" required placeholder="Old E-Mail">
+
+                <label for="newEmail">New Email:</label>
+                <input type="email" id="newEmail" name="newEmail" required placeholder="New E-Mail">
+
+                <button type="submit" class="change-button">Update Email</button>
             </form>
 
             <form id="changePasswordForm">
-                <label for="newPassword">Neues Passwort:</label>
-                <input type="password" id="newPassword" name="newPassword" placeholder="Neues Passwort">
-                <button type="submit" class="change-button">Passwort ändern</button>
+                <h2>Change Password</h2>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required placeholder="Email">
+
+                <label for="oldPassword">Old Password:</label>
+                <input type="password" id="oldPassword" name="oldPassword" required placeholder="Old Password">
+
+                <label for="newPassword">New Password:</label>
+                <input type="password" id="newPassword" name="newPassword" required placeholder="New Password">
+
+                <button type="submit" class="change-button">Change Password</button>
             </form>
         </div>
         <div class="delete-account-form">
