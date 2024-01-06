@@ -216,7 +216,7 @@ function connectWebSocket(customerId) {
 function updateCustomerName() {
   var customerId = getCookie("customerId"); // Annahme, dass die Kunden-ID im Cookie 'customerId' gespeichert ist
   if (customerId) {
-    document.getElementById("customerName").textContent = customerId;
+    document.getElementById("customerName").textContent = "Customer ID: " + customerId;
   } else {
     document.getElementById("customerName").textContent = "Unbekannter Nutzer";
   }
