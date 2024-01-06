@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPS API Client</title>
+</head>
+<body>
+    <h1>GPS API Client</h1>
+
+    <input type="text" id="carNumber" placeholder="Enter car number">
+    <br>
+
+    <button onclick="createRandomLocation()">Create Random Location</button>
+
+    <div id="response"></div>
+
+    <script>
+        function createRandomLocation() {
+            const carNumber = document.getElementById('carNumber').value;
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://localhost:8090/gps');
+            xhr.setRequestHeader('Content-Type', 'application/json');
+
+            const data = {
+                carId: carNumber,
+                location: generateRandomLocation()
+            };
+
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    const responseText = JSON.parse(xhr.responseText);
+                    document.getElementById('response').innerHTML = responseText.message;
+                } else {
+                    document.getElementById('response').innerHTML = 'Error: ' + xhr.statusText;
+                }
+            };
+
+            xhr.send(JSON.stringify(data));
+        }
+
+        function generateRandomLocation() {
+            const latitude = -90.0 + Math.random() * 180.0;
+            const longitude = -180.0 + Math.random() * 360.0;
+
+            return `Latitude: ${latitude}, Longitude: ${longitude}`;
+        }
+    </script>
+</body>
+</html>
