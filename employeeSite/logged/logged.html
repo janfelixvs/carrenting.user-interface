@@ -10,39 +10,114 @@
 
 <body>
     <div class="header">
-        <h1>Car Management System</h1>
         <img src="../resources/croppedlogo.png" alt="CarRenting Logo" class="header-logo">
+        <h1>Car Management System</h1>
         <div class="header-info">
-            <span class="username" id="employeeID">Laden...</span>
+            <span class="employeeId" id="employeeID">Laden...</span>
             <button class="logout-button" onclick="logout()">Logout</button>
         </div>
     </div>
 
-    <div class="content">
-        <!-- Einfügen -->
-        <h2 class="subtitle">Einfügen:</h2>
-        <div class="container">
-            <input type="text" id="marke" placeholder="Marke">
-            <input type="text" id="modell" placeholder="Modell">
-            <input type="text" id="kennzeichenEinfuegen" placeholder="Kennzeichen">
-            <button onclick="addCar()">Einfügen</button>
+    <div class="main-area">
+        <div class="sidebar">
+            <ul>
+                <li><a href="#home" id="homeLink">Home</a></li>
+                <li><a href="#cars" id="carsLink">Cars</a></li>
+                <li><a href="#customers" id="customersLink">Customers</a></li>
+                <li><a href="#gps-tracking" id="gps-trackingLink">GPS Tracking</a></li>
+                <li><a href="#maintenance" id="maintenanceLink">Maintenance</a></li>
+                <li><a href="#reservations" id="reservationsLink">Reservations</a></li>
+            </ul>
         </div>
-
-        <!-- Entfernen -->
-        <h2 class="subtitle">Entfernen:</h2>
-        <div class="container">
-            <input type="text" id="kennzeichenEntfernen" placeholder="Kennzeichen">
-            <button onclick="removeCar()">Entfernen</button>
-        </div>
-
-        <!-- Update -->
-        <h2 class="subtitle">Update:</h2>
-        <div class="container">
-            <input type="text" id="kennzeichenUpdate" placeholder="Kennzeichen für Update">
-            <label id="reservlabel">Reservierung:</label>
-            <input type="checkbox" id="reserved" placeholder="Reserved">
-            <input type="number" id="kilometerstand" placeholder="Kilometerstand">
-            <button onclick="updateCar()">Update</button>
+        <div class="content-area">
+            <div class="car-table" style="display:none;">
+                <h2>Cars List</h2>
+                <table id="carsTable" class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Car ID</th>
+                            <th>Model</th>
+                            <th>Brand</th>
+                            <th>Mileage</th>
+                            <th>License Plate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Rows will be added dynamically here -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="customer-table" style="display:none;">
+                <h2>Customer List</h2>
+                <table id="customerTable" class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Customer ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email</th>
+                            <th>Password</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Rows will be added dynamically here -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="gps-table" style="display:none;">
+                <h2>GPS Tracking List</h2>
+                <table id="gpsTable" class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Tracking ID</th>
+                            <th>Car ID</th>
+                            <th>Timestamp</th>
+                            <th>Location</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Rows will be added dynamically here -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="maintenance-table" style="display:none;">
+                <h2>Maintenance List</h2>
+                <table id="maintenanceTable" class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Maintenance ID</th>
+                            <th>Car ID</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Rows will be added dynamically here -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="reservations-table" style="display:none;">
+                <h2>Reservation List</h2>
+                <table id="reservationTable" class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Reservation ID</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Customer ID</th>
+                            <th>Car ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Rows will be added dynamically here -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="greetings-area">
+                <h2>Welcome to the Car Management System</h2>
+                <p>Select an option from the sidebar to get started.</p>
+            </div>
         </div>
     </div>
 </body>
