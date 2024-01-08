@@ -80,7 +80,15 @@ body {
     color: white;
     text-decoration: none;
     display: block;
+    padding: 10px 15px;
+    margin: 5px 0;
+    background-color: #444;
+    border-radius: 5px;
     transition: all 0.3s ease;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .sidebar ul li:hover {
