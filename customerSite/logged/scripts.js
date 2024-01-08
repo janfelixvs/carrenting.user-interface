@@ -185,7 +185,6 @@ function logout() {
     stompClient.disconnect();
     console.log("Disconnected");
   }
-  // Weiterleitung zur Logout-Seite
   window.location.href = "../welcome/welcome.html";
 }
 

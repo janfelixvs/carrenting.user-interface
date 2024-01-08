@@ -1,0 +1,101 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #e2e2e2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    /* You can adjust the width as needed */
+    max-width: 1200px;
+    /* You can adjust the max-width as needed */
+}
+
+.logo-header {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    max-width: 300px;
+    /* Adjust the size of your logo */
+    height: auto;
+}
+
+.login-main {
+    flex: 2;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.login-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 350px;
+    /* Adjust the width of the form as needed */
+}
+
+input[type="text"],
+input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.button {
+    background-color: #1877f2;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    width: 100%;
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+}
+
+.button:hover {
+    background-color: #165e9b;
+}
+
+.create-account {
+    background-color: #42b72a;
+    margin-top: 10px;
+}
+
+.create-account:hover {
+    background-color: #36a420;
+}
+
+.separator {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, #fff, #ddd, #fff);
+    margin: 20px 0;
+}
+
+.notification-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #4CAF50; /* Green background by default */
+    color: white;
+    text-align: center;
+    padding: 10px;
+    z-index: 1000;
+}

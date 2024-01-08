@@ -1,6 +1,27 @@
 
 "use strict"
 
+var stompClient = null;
+
+document.addEventListener("DOMContentLoaded", (event) => {
+    updateEmployeeName();
+});
+
+function updateEmployeeName() {
+    var employeeID = getCookie("employeeID");
+    if (employeeID) {
+        document.getElementById("employeeID").textContent = "Employee ID: " + employeeID;
+    } else {
+        document.getElementById("employeeID").textContent = "Unbekannter Nutzer";
+    }
+}
+
+function getCookie(name) {
+    var value = "; " + document.cookie;
+    var parts = value.split("; " + name + "=");
+    if (parts.length == 2) return parts.pop().split(";").shift();
+}
+
 function addCar() {
     var marke = document.getElementById('marke').value;
     var modell = document.getElementById('modell').value;
@@ -50,18 +71,28 @@ function updateCar() {
             kilometerstand: kilometerstand
         })
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        alert('Car updated successfully!');
-        console.log(data);
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Error updating car');
-    });
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            alert('Car updated successfully!');
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error updating car');
+        });
+}
+
+
+
+function logout() {
+    if (stompClient !== null) {
+        stompClient.disconnect();
+        console.log("Disconnected");
+    }
+    window.location.href = "../welcome/welcome.html";
 }
