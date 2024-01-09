@@ -57,6 +57,10 @@ document.getElementById("reservationsLink").addEventListener('click', function (
 
 /* -------------------- other fuctions -------------------- */
 
+function toggleSidebar() {
+    document.querySelector('.main-area').classList.toggle('sidebar-hidden');
+}
+
 function hideAllTables() {
     document.querySelector('.car-table').style.display = 'none';
     document.querySelector('.customer-table').style.display = 'none';

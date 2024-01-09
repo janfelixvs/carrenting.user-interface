@@ -22,6 +22,7 @@ body {
     justify-content: space-between;
     width: 100%;
     box-sizing: border-box;
+    z-index: 1001;
 }
 
 .header-logo {
@@ -41,6 +42,24 @@ body {
     align-items: center;
 }
 
+.hamburger-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+    cursor: pointer;
+    z-index: 1000;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.bar {
+    height: 3px;
+    width: 100%;
+    background-color: white;
+}
+
 .main-area {
     flex-grow: 1;
     display: flex;
@@ -55,6 +74,20 @@ body {
     height: 100vh;
     padding: 20px 0;
     box-sizing: border-box;
+    transition: transform 0.3s ease;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    top: 80px;
+}
+
+.sidebar-hidden .sidebar {
+    transform: translateX(-100%);
+}
+
+.sidebar-hidden .content-area {
+    margin-left: 0;
 }
 
 .sidebar ul {
@@ -99,6 +132,8 @@ body {
 
 .content-area {
     padding: 10px;
+    transition: margin-left 0.3s ease;
+    margin-left: 200px;
 }
 
 .greetings-area h2,
