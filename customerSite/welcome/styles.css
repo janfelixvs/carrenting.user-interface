@@ -2,7 +2,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Arial', sans-serif;
-    background-color: #e2e2e2;
+    background-color: #333;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -38,7 +38,7 @@ body {
 }
 
 .login-section {
-    background-color: #fff;
+    background-color: #131313;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -93,7 +93,8 @@ input[type="password"] {
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: #4CAF50; /* Green background by default */
+    background-color: #4CAF50;
+    /* Green background by default */
     color: white;
     text-align: center;
     padding: 10px;

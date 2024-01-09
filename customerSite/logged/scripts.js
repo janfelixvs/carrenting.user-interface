@@ -1,61 +1,70 @@
-document
-  .getElementById("addReservationForm")
-  .addEventListener("submit", function (event) {
-    event.preventDefault();
+"use strict"
 
-    const startDate = document.getElementById("startDate").value;
-    const endDate = document.getElementById("endDate").value;
-    const customerID = document.getElementById("customerID").value;
-    const carID = document.getElementById("carID").value;
+/* ==================== Variables ==================== */
 
-    fetch("http://localhost:8083/api/reservation", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        startDate,
-        endDate,
-        customerID,
-        carID,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
-        loadReservations();
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  });
+var stompClient = null;
 
-document
-  .getElementById("updateEmailForm")
-  .addEventListener("submit", function (event) {
-    event.preventDefault();
+/* ==================== EventListener ==================== */
 
-    var oldEmail = document.getElementById("oldEmail").value;
-    var newEmail = document.getElementById("newEmail").value;
+document.addEventListener("DOMContentLoaded", (event) => {
+  updateCustomerName();
+});
 
-    updateEmail(oldEmail, newEmail);
-  });
+document.getElementById("homeLink").addEventListener('click', function (event) {
+  event.preventDefault();
+  hideAllTables();
+  showHome();
+});
 
-document
-  .getElementById("changePasswordForm")
-  .addEventListener("submit", function (event) {
-    event.preventDefault();
+document.getElementById("reservationLink").addEventListener('click', function (event) {
+  event.preventDefault();
+  hideAllTables();
+  showReservation();
+});
 
-    var email = document.getElementById("email").value;
-    var oldPassword = document.getElementById("oldPassword").value;
-    var newPassword = document.getElementById("newPassword").value;
+document.getElementById("accountLink").addEventListener('click', function (event) {
+  event.preventDefault();
+  hideAllTables();
+  showAccount();
+});
 
-    changePassword(email, oldPassword, newPassword);
-  });
+/* ==================== Functions ==================== */
 
-//deleteAccount(email, password);
+/* -------------------- other fuctions -------------------- */
+
+function toggleSidebar() {
+  document.querySelector('.main-area').classList.toggle('sidebar-hidden');
+}
+
+function hideAllTables() {
+  document.querySelector('.home-menu').style.display = 'none';
+  document.querySelector('.reservation-menu').style.display = 'none';
+  document.querySelector('.account-menu').style.display = 'none';
+}
+
+function logout() {
+  if (stompClient !== null) {
+    stompClient.disconnect();
+    console.log("Disconnected");
+  }
+  window.location.href = "../welcome/welcome.html";
+}
+
+/* -------------------- Home -------------------- */
+
+function showHome() {
+  document.querySelector('.home-menu').style.display = 'block';
+}
+
+/* -------------------- Reservation -------------------- */
+
+function showReservation() {
+  //loadReservations();
+  document.querySelector('.reservation-menu').style.display = 'block';
+}
+
 function loadReservations() {
-  fetch("http://localhost:8083/api/reservation")
+  fetch("http://localhost:8081/api/employee/reservation")
     .then((response) => response.json())
     .then((data) => {
       const currentReservationsTableBody = document
@@ -100,6 +109,67 @@ function loadReservations() {
       console.error("Error:", error);
     });
 }
+
+document
+  .getElementById("addReservationForm")
+  .addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const startDate = document.getElementById("startDate").value;
+    const endDate = document.getElementById("endDate").value;
+    const customerID = document.getElementById("customerID").value;
+    const carID = document.getElementById("carID").value;
+
+    fetch("http://localhost:8083/api/reservation", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        startDate,
+        endDate,
+        customerID,
+        carID,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+        loadReservations();
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  });
+
+/* -------------------- Account -------------------- */
+
+function showAccount() {
+  document.querySelector('.account-menu').style.display = 'block';
+}
+
+document
+  .getElementById("updateEmailForm")
+  .addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    var oldEmail = document.getElementById("oldEmail").value;
+    var newEmail = document.getElementById("newEmail").value;
+
+    updateEmail(oldEmail, newEmail);
+  });
+
+document
+  .getElementById("changePasswordForm")
+  .addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    var email = document.getElementById("email").value;
+    var oldPassword = document.getElementById("oldPassword").value;
+    var newPassword = document.getElementById("newPassword").value;
+
+    changePassword(email, oldPassword, newPassword);
+  });
 
 function updateEmail(oldEmail, newEmail) {
   var payload = {
@@ -180,12 +250,12 @@ function deleteAccount(email, password) {
     });
 }
 
-function logout() {
-  if (stompClient !== null) {
-    stompClient.disconnect();
-    console.log("Disconnected");
-  }
-  window.location.href = "../welcome/welcome.html";
+/* -------------------- Cookies -------------------- */
+
+function getCookie(name) {
+  var value = "; " + document.cookie;
+  var parts = value.split("; " + name + "=");
+  if (parts.length == 2) return parts.pop().split(";").shift();
 }
 
 document.addEventListener("DOMContentLoaded", (event) => {
@@ -199,7 +269,14 @@ document.addEventListener("DOMContentLoaded", (event) => {
   connectWebSocket(getCookie("customerId"));
 });
 
-var stompClient = null;
+function updateCustomerName() {
+  var customerId = getCookie("customerId"); // Annahme, dass die Kunden-ID im Cookie 'customerId' gespeichert ist
+  if (customerId) {
+    document.getElementById("customerName").textContent = "Customer ID: " + customerId;
+  } else {
+    document.getElementById("customerName").textContent = "Unbekannter Nutzer";
+  }
+}
 
 function connectWebSocket(customerId) {
   var socket = new SockJS("http://localhost:8085/websocket");
@@ -210,19 +287,4 @@ function connectWebSocket(customerId) {
       alert("Neue Nachricht: " + message.body);
     });
   });
-}
-
-function updateCustomerName() {
-  var customerId = getCookie("customerId"); // Annahme, dass die Kunden-ID im Cookie 'customerId' gespeichert ist
-  if (customerId) {
-    document.getElementById("customerName").textContent = "Customer ID: " + customerId;
-  } else {
-    document.getElementById("customerName").textContent = "Unbekannter Nutzer";
-  }
-}
-
-function getCookie(name) {
-  var value = "; " + document.cookie;
-  var parts = value.split("; " + name + "=");
-  if (parts.length == 2) return parts.pop().split(";").shift();
 }

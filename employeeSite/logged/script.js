@@ -7,7 +7,6 @@ var stompClient = null;
 var exampleCars = [
     { make: 'Toyota', model: 'Corolla', year: 2020, color: 'Red' },
     { make: 'Honda', model: 'Civic', year: 2019, color: 'Blue' },
-    // Add more cars as needed
 ];
 
 /* ==================== EventListener ==================== */
@@ -75,6 +74,42 @@ function hideAllTables() {
 function showDashboard() {
     document.querySelector('.dashboard').style.display = 'block';
 }
+
+// Example data
+let carData = {
+    rented: 50, // Number of cars currently rented
+    available: 100, // Number of cars available for rent
+    maintenance: 20 // Number of cars in maintenance
+};
+
+document.addEventListener("DOMContentLoaded", function () {
+    var ctx = document.getElementById('carStatusChart').getContext('2d');
+    var carStatusChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Available', 'Rented', 'Maintenance'],
+            datasets: [{
+                label: 'Car Status',
+                data: [carData.available, carData.rented, carData.maintenance],
+                backgroundColor: [
+                    'white',
+                    'green',
+                    'black'
+                ],
+                borderColor: [
+                    'black', // Add border color if white is not visible
+                    'black',
+                    'black'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true
+        }
+    });
+});
 
 /* -------------------- Cars -------------------- */
 

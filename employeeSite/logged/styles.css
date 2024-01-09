@@ -11,7 +11,7 @@ body {
 }
 
 .employeeId {
-    margin-right: 10px;
+    margin-right: 20px;
 }
 
 .header {
@@ -79,7 +79,7 @@ body {
     left: 0;
     top: 0;
     bottom: 0;
-    top: 80px;
+    top: 75px;
 }
 
 .sidebar-hidden .sidebar {
@@ -164,6 +164,13 @@ body {
     color: #bbb;
 }
 
+.chart-container {
+    width: 400px;
+    height: 400px;
+    margin: auto;
+    position: relative;
+}
+
 .data-table {
     border-collapse: collapse;
     width: 100%;
@@ -178,11 +185,12 @@ body {
     border: 1px solid #444;
     padding: 8px;
     text-align: left;
+    font-family: Arial, sans-serif;
 }
 
 .data-table thead {
     background-color: #222;
-    color: #3ad22f;
+    color: #0dbd00;
 }
 
 .data-table tr:nth-child(even) {
@@ -221,11 +229,6 @@ body {
         display: block;
         overflow-x: auto;
     }
-}
-
-.data-table th,
-.data-table td {
-    font-family: Arial, sans-serif;
 }
 
 .logout-button {
