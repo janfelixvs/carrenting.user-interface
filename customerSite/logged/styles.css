@@ -198,6 +198,70 @@ body {
     background-color: #555;
 }
 
+/* Account Menu Styles */
+.account-menu {
+    background-color: #2a2a2a; /* Slightly different background for the account area */
+    border-radius: 10px; /* Rounded corners for the card */
+    padding: 20px;
+    margin: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
+
+.account-menu h2 {
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.account-menu form {
+    background-color: #333; /* Card-style background for forms */
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+.account-menu label {
+    display: block;
+    margin-bottom: 5px;
+    color: #ccc;
+}
+
+.account-menu input[type="email"],
+.account-menu input[type="password"] {
+    width: 90%; /* Adjusted from 100% to 80% */
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #444;
+    background-color: #222;
+    color: #fff;
+    display: block; /* Ensures the input fills the width of its container */
+    margin-left: auto; /* Centers the input field */
+    margin-right: auto; /* Centers the input field */
+}
+
+.account-menu .change-button,
+.account-menu .delete-button {
+    background-color: #4CAF50; /* Green button */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.account-menu .change-button:hover,
+.account-menu .delete-button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
 @media (max-width: 600px) {
     body {
         flex-direction: column;
@@ -225,6 +289,17 @@ body {
     .reservation-list {
         display: block;
         overflow-x: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .account-menu {
+        margin: 10px;
+        padding: 10px;
+    }
+
+    .account-menu form {
+        padding: 10px;
     }
 }
 

@@ -63,7 +63,7 @@ function showReservation() {
   document.querySelector('.reservation-menu').style.display = 'block';
 }
 
-function loadReservations() {
+/* function loadReservations() {
   fetch("http://localhost:8081/api/employee/reservation")
     .then((response) => response.json())
     .then((data) => {
@@ -108,9 +108,9 @@ function loadReservations() {
     .catch((error) => {
       console.error("Error:", error);
     });
-}
+} */
 
-document
+/* document
   .getElementById("addReservationForm")
   .addEventListener("submit", function (event) {
     event.preventDefault();
@@ -140,7 +140,7 @@ document
       .catch((error) => {
         console.error("Error:", error);
       });
-  });
+  }); */
 
 /* -------------------- Account -------------------- */
 
@@ -149,7 +149,7 @@ function showAccount() {
 }
 
 document
-  .getElementById("updateEmailForm")
+  .getElementById("change-mail-button")
   .addEventListener("submit", function (event) {
     event.preventDefault();
 
@@ -157,18 +157,6 @@ document
     var newEmail = document.getElementById("newEmail").value;
 
     updateEmail(oldEmail, newEmail);
-  });
-
-document
-  .getElementById("changePasswordForm")
-  .addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    var email = document.getElementById("email").value;
-    var oldPassword = document.getElementById("oldPassword").value;
-    var newPassword = document.getElementById("newPassword").value;
-
-    changePassword(email, oldPassword, newPassword);
   });
 
 function updateEmail(oldEmail, newEmail) {
@@ -196,6 +184,18 @@ function updateEmail(oldEmail, newEmail) {
       // Handle errors here
     });
 }
+
+document
+  .getElementById("changePasswordForm")
+  .addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    var email = document.getElementById("email").value;
+    var oldPassword = document.getElementById("oldPassword").value;
+    var newPassword = document.getElementById("newPassword").value;
+
+    changePassword(email, oldPassword, newPassword);
+  });
 
 function changePassword(email, oldPassword, newPassword) {
   var payload = {
