@@ -50,7 +50,7 @@ body {
     height: 25px;
     cursor: pointer;
     z-index: 1000;
-    margin-left: 20px;
+    margin-left: 10px;
     margin-right: 20px;
 }
 
@@ -136,7 +136,7 @@ body {
     margin-left: 200px;
 }
 
-.greetings-area h2,
+.dashboard h2,
 .car-table h2,
 .customer-table h2,
 .gps-table h2,
@@ -146,7 +146,7 @@ body {
     margin-top: 10px;
 }
 
-.greetings-area {
+.dashboard {
     padding: 20px;
     flex-grow: 1;
     display: flex;
@@ -156,11 +156,11 @@ body {
     text-align: center;
 }
 
-.greetings-area h2 {
+.dashboard h2 {
     color: #fff;
 }
 
-.greetings-area p {
+.dashboard p {
     color: #bbb;
 }
 

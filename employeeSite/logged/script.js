@@ -16,10 +16,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
     updateEmployeeName();
 });
 
-document.getElementById("homeLink").addEventListener('click', function (event) {
+document.getElementById("DashboardLink").addEventListener('click', function (event) {
     event.preventDefault();
     hideAllTables();
-    showGreetingsArea();
+    showDashboard();
 });
 
 document.getElementById("carsLink").addEventListener('click', function (event) {
@@ -62,6 +62,7 @@ function toggleSidebar() {
 }
 
 function hideAllTables() {
+    document.querySelector('.dashboard').style.display = 'none';
     document.querySelector('.car-table').style.display = 'none';
     document.querySelector('.customer-table').style.display = 'none';
     document.querySelector('.gps-table').style.display = 'none';
@@ -69,18 +70,16 @@ function hideAllTables() {
     document.querySelector('.reservations-table').style.display = 'none';
 }
 
-/* -------------------- Greetings Area -------------------- */
+/* -------------------- Dashboard -------------------- */
 
-function showGreetingsArea() {
-    document.querySelector('.car-table').style.display = 'none'; // Hide car table
-    document.querySelector('.greetings-area').style.display = 'block'; // Show greetings
+function showDashboard() {
+    document.querySelector('.dashboard').style.display = 'block';
 }
 
 /* -------------------- Cars -------------------- */
 
 function showCarTable() {
     fetchCarData();
-    document.querySelector('.greetings-area').style.display = 'none';
     document.querySelector('.car-table').style.display = 'block';
 }
 
@@ -120,7 +119,6 @@ function populateCarTable(cars) {
 
 function showCustomerTable() {
     fetchCustomerData();
-    document.querySelector('.greetings-area').style.display = 'none';
     document.querySelector('.customer-table').style.display = 'block';
 }
 
@@ -160,7 +158,6 @@ function populateCustomerTable(customers) {
 
 function showGpsTable() {
     fetchGpsData();
-    document.querySelector('.greetings-area').style.display = 'none';
     document.querySelector('.gps-table').style.display = 'block';
 }
 
@@ -194,15 +191,12 @@ function populateGpsTable(gpsData) {
     });
 }
 
-
 /* -------------------- Maintenance -------------------- */
 
 function showMaintenanceTable() {
     fetchMaintenanceData();
-    document.querySelector('.greetings-area').style.display = 'none';
     document.querySelector('.maintenance-table').style.display = 'block';
 }
-
 
 function fetchMaintenanceData() {
     fetch('http://localhost:8081/api/employee/maintenance/all')
@@ -240,10 +234,8 @@ function populateMaintenanceTable(maintenances) {
 
 function showReservationTable() {
     fetchReservationData();
-    document.querySelector('.greetings-area').style.display = 'none';
     document.querySelector('.reservations-table').style.display = 'block';
 }
-
 
 function fetchReservationData() {
     fetch('http://localhost:8081/api/employee/reservation') // Adjust the endpoint as needed
@@ -276,7 +268,6 @@ function populateReservationTable(reservations) {
         carIdCell.textContent = reservation.carID;
     });
 }
-
 
 /* -------------------- Cookies -------------------- */
 
