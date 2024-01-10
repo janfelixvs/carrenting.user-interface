@@ -45,6 +45,16 @@
 
             </div>
             <div class="car-table" style="display:none;">
+                <div class="add-car-form">
+                    <h3>Add Car to Fleet</h3>
+                    <form id="addCarForm">
+                        <input type="text" id="model" placeholder="Model" required>
+                        <input type="text" id="brand" placeholder="Brand" required>
+                        <input type="number" id="mileage" placeholder="Mileage" required>
+                        <input type="text" id="licensePlate" placeholder="License Plate" required>
+                        <button type="submit">Add Car</button>
+                    </form>
+                </div>
                 <h2>Cars List</h2>
                 <table id="carsTable" class="data-table">
                     <thead>
@@ -54,6 +64,7 @@
                             <th>Brand</th>
                             <th>Mileage</th>
                             <th>License Plate</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -95,6 +106,15 @@
                 </table>
             </div>
             <div class="maintenance-table" style="display:none;">
+                <div class="schedule-maintenance-form add-car-form">
+                    <h3>Schedule Maintenance</h3>
+                    <form id="scheduleMaintenanceForm">
+                        <input type="number" id="maintenanceCarId" placeholder="Car ID" required>
+                        <input type="date" id="maintenanceStartDate" placeholder="Start Date" required>
+                        <input type="date" id="maintenanceEndDate" placeholder="End Date" required>
+                        <button type="submit">Schedule</button>
+                    </form>
+                </div>
                 <h2>Maintenance List</h2>
                 <table id="maintenanceTable" class="data-table">
                     <thead>
@@ -104,6 +124,7 @@
                             <th>Start Date</th>
                             <th>End Date</th>
                             <th>Status</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -130,6 +151,7 @@
             </div>
         </div>
     </div>
+    <div id="notification-banner" class="notification-banner" style="display: none;"></div>
 </body>
 
 </html>

@@ -13,43 +13,54 @@ var exampleCars = [
 
 document.addEventListener("DOMContentLoaded", (event) => {
     updateEmployeeName();
-});
 
-document.getElementById("DashboardLink").addEventListener('click', function (event) {
-    event.preventDefault();
-    hideAllTables();
-    showDashboard();
-});
+    document.getElementById("DashboardLink").addEventListener('click', function (event) {
+        event.preventDefault();
+        hideAllTables();
+        showDashboard();
+    });
 
-document.getElementById("carsLink").addEventListener('click', function (event) {
-    event.preventDefault();
-    hideAllTables();
-    showCarTable();
-});
+    document.getElementById("carsLink").addEventListener('click', function (event) {
+        event.preventDefault();
+        hideAllTables();
+        showCarTable();
+    });
 
-document.getElementById("customersLink").addEventListener('click', function (event) {
-    event.preventDefault();
-    hideAllTables();
-    showCustomerTable();
-});
+    document.getElementById("addCarForm").addEventListener('submit', function (event) {
+        event.preventDefault();
+        addNewCarToFleet();
+    });
 
-document.getElementById("gps-trackingLink").addEventListener('click', function (event) {
-    event.preventDefault();
-    hideAllTables();
-    showGpsTable();
-});
+    document.getElementById("customersLink").addEventListener('click', function (event) {
+        event.preventDefault();
+        hideAllTables();
+        showCustomerTable();
+    });
+
+    document.getElementById("gps-trackingLink").addEventListener('click', function (event) {
+        event.preventDefault();
+        hideAllTables();
+        showGpsTable();
+    });
 
 
-document.getElementById("maintenanceLink").addEventListener('click', function (event) {
-    event.preventDefault();
-    hideAllTables();
-    showMaintenanceTable();
-});
+    document.getElementById("maintenanceLink").addEventListener('click', function (event) {
+        event.preventDefault();
+        hideAllTables();
+        showMaintenanceTable();
+    });
 
-document.getElementById("reservationsLink").addEventListener('click', function (event) {
-    event.preventDefault();
-    hideAllTables();
-    showReservationTable();
+    document.getElementById("scheduleMaintenanceForm").addEventListener('submit', function (event) {
+        event.preventDefault();
+        scheduleMaintenance();
+    });
+
+    document.getElementById("reservationsLink").addEventListener('click', function (event) {
+        event.preventDefault();
+        hideAllTables();
+        showReservationTable();
+    });
+
 });
 
 /* ==================== Functions ==================== */
@@ -113,6 +124,44 @@ document.addEventListener("DOMContentLoaded", function () {
 
 /* -------------------- Cars -------------------- */
 
+function addNewCarToFleet() {
+    const model = document.getElementById('model').value;
+    const brand = document.getElementById('brand').value;
+    const mileage = document.getElementById('mileage').value;
+    const licensePlate = document.getElementById('licensePlate').value;
+
+    const newCar = { model, brand, mileage, licensePlate };
+
+    postNewCarData(newCar)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            showBanner('Car added successfully', true); // Show success banner
+            // Clear the form
+            document.getElementById('addCarForm').reset();
+            // Optionally refresh the car list
+            fetchCarData();
+        })
+        .catch(error => {
+            console.error('Error adding new car:', error);
+            showBanner('Failed to add car', false); // Show error banner
+        });
+}
+
+function postNewCarData(car) {
+    return fetch('http://localhost:8081/api/employee/car', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(car),
+    });
+}
+
 function showCarTable() {
     fetchCarData();
     document.querySelector('.car-table').style.display = 'block';
@@ -142,13 +191,44 @@ function populateCarTable(cars) {
         var mileageCell = row.insertCell(3);
         var licensePlateCell = row.insertCell(4);
 
+
         carIdCell.textContent = car.carID;
         modelCell.textContent = car.model;
         brandCell.textContent = car.brand;
         mileageCell.textContent = car.mileage;
         licensePlateCell.textContent = car.licensePlate;
+
+        var deleteCell = row.insertCell(5);
+        var deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete';
+        deleteButton.onclick = function () { deleteCar(car.licensePlate); };
+        deleteCell.appendChild(deleteButton);
     });
 }
+
+
+function deleteCar(carId) {
+    fetch(`http://localhost:8081/api/employee/car/${carId}`, {
+        method: 'DELETE'
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json(); // Assuming the response is JSON
+        })
+        .then(data => {
+            showBanner('Car deleted successfully', true); // Show success banner
+            fetchCarData(); // Refresh the car data after deletion
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showBanner('Failed to delete car', false); // Show error banner
+        });
+}
+
+
+
 
 /* -------------------- Customer -------------------- */
 
@@ -228,6 +308,50 @@ function populateGpsTable(gpsData) {
 
 /* -------------------- Maintenance -------------------- */
 
+function scheduleMaintenance() {
+    const carId = document.getElementById('maintenanceCarId').value;
+    const startDate = document.getElementById('maintenanceStartDate').value;
+    const endDate = document.getElementById('maintenanceEndDate').value;
+
+    const maintenanceData = {
+        carID: parseInt(carId),
+        startDate: new Date(startDate),
+        endDate: new Date(endDate)
+        //status: 'Scheduled'
+    };
+
+    postMaintenanceData(maintenanceData)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            showBanner('Maintenance scheduled successfully', true); // Show success banner
+            // Clear the form
+            document.getElementById('scheduleMaintenanceForm').reset();
+            showMaintenanceTable();
+        })
+        .catch(error => {
+            console.error('Error scheduling maintenance:', error);
+            showBanner('Failed to schedule maintenance', false); // Show error banner
+
+        });
+}
+
+
+function postMaintenanceData(maintenance) {
+    return fetch('http://localhost:8081/api/employee/maintenance', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(maintenance),
+    });
+}
+
+
 function showMaintenanceTable() {
     fetchMaintenanceData();
     document.querySelector('.maintenance-table').style.display = 'block';
@@ -251,18 +375,47 @@ function populateMaintenanceTable(maintenances) {
 
     maintenances.forEach(function (maintenance) {
         var row = table.insertRow();
-        var maintenanceIdCell = row.insertCell(0);
-        var carIdCell = row.insertCell(1);
-        var startDateCell = row.insertCell(2);
-        var endDateCell = row.insertCell(3);
-        var statusCell = row.insertCell(4);
 
+        // Maintenance ID Cell
+        var maintenanceIdCell = row.insertCell(0);
         maintenanceIdCell.textContent = maintenance.maintenanceID;
+
+        // Car ID Cell
+        var carIdCell = row.insertCell(1);
         carIdCell.textContent = maintenance.carID;
+
+        // Start Date Cell
+        var startDateCell = row.insertCell(2);
         startDateCell.textContent = maintenance.startDate;
+
+        // End Date Cell
+        var endDateCell = row.insertCell(3);
         endDateCell.textContent = maintenance.endDate;
+
+        // Status Cell
+        var statusCell = row.insertCell(4);
         statusCell.textContent = maintenance.status;
+
+        // Delete Button Cell
+        var deleteCell = row.insertCell(5);
+        var deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+        deleteButton.onclick = function () { deleteMaintenance(maintenance.maintenanceID); };
+        deleteCell.appendChild(deleteButton);
     });
+}
+
+function deleteMaintenance(maintenanceId) {
+    fetch(`http://localhost:8081/api/employee/maintenance/delete/${maintenanceId}`, {
+        method: 'DELETE'
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            fetchMaintenanceData(); // Refresh the table
+        })
+        .catch(error => console.error('Error deleting maintenance:', error));
 }
 
 /* -------------------- Reservations -------------------- */
@@ -329,4 +482,19 @@ function logout() {
         console.log("Disconnected");
     }
     window.location.href = "../welcome/welcome.html";
+}
+
+/* -------------------- Banner -------------------- */
+
+
+function showBanner(message, isSuccess) {
+    var banner = document.getElementById("notification-banner");
+    banner.style.backgroundColor = isSuccess ? "#4CAF50" : "#f44336"; // Green for success, red for failure
+    banner.textContent = message;
+    banner.style.display = "block";
+
+    // Automatically hide the banner after 3 seconds
+    setTimeout(function () {
+        banner.style.display = "none";
+    }, 3000);
 }

@@ -309,7 +309,6 @@ body {
 .account-menu .change-button,
 .account-menu .delete-button {
     background-color: #4CAF50;
-    /* Green button */
     color: white;
     border: none;
     padding: 10px 15px;

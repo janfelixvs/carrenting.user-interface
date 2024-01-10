@@ -1,24 +1,30 @@
 ==Employee==
 
 ##Dashboard
+- overview chart                            ✔️
 - feed chart with data
 
 ##Cars
-- add cars
-- delete cars
+- add cars                                  ✔️
+- delete cars                               ❌ (wahrscheinlich fehlerhafte API)
+- getAllCars                                ✔️
 
 ##Customers
-- view allCustomers
+- view allCustomers                         ✔️
 
 ##GPS
-- tracking by id (location, miles)          ✔️
+- recentLocations and miles  
+- show milage and location for each car
 
 ##Maintenance
-- schedule maintenance
-- find maintenance by car id
+- schedule maintenance                      ✔️ (optional: status, dropdown only available)
+- delete maintenance                        ✔️
+- (optional)find maintenance by car id
+- getAllMaintenances                        ✔️
 
 ##Reservations
 - optional (add/delte reservation)
+getAllReservations                          ✔️
 
 ##Message
 - send a message to the Customer

@@ -171,6 +171,59 @@ body {
     position: relative;
 }
 
+.add-car-form {
+    background-color: #2b2b2b;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 8px;
+}
+
+.add-car-form h3 {
+    color: #fff;
+    margin-top: 0px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.add-car-form form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    align-items: center;
+}
+
+.add-car-form input[type="text"],
+.add-car-form input[type="date"],
+.add-car-form input[type="number"] {
+    padding: 10px;
+    border: 2px solid #444;
+    border-radius: 4px;
+    background-color: #333;
+    color: white;
+    outline: none;
+}
+
+.add-car-form input[type="text"]:focus,
+.add-car-form input[type="date"]:focus,
+.add-car-form input[type="number"]:focus {
+    border-color: #38bc3c;
+}
+
+.add-car-form button {
+    grid-column: span 2;
+    padding: 10px 15px;
+    background-color: #225d0d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-car-form button:hover {
+    background-color: #3c9e17;
+}
+
 .data-table {
     border-collapse: collapse;
     width: 100%;
@@ -246,4 +299,16 @@ body {
 .logout-button:hover {
     background-color: #A52A2A;
     /* Slightly lighter red on hover */
+}
+
+.notification-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    z-index: 1000;
 }
