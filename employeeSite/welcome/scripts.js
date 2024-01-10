@@ -1,7 +1,3 @@
-// Function to sign up a new user
-
-// Function to log in a user
-// Funktion zum Setzen eines Cookies
 function setCookie(name, value, days) {
   var expires = "";
   if (days) {
@@ -12,7 +8,6 @@ function setCookie(name, value, days) {
   document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }
 
-// Modifizierte Login-Funktion
 function login() {
   var email = document.getElementById("email").value;
   var password = document.getElementById("password").value;
@@ -38,7 +33,6 @@ function login() {
     })
     .then((data) => {
       console.log("Login successful:", data);
-      // Setzen des Cookies mit der Kundennummer
       setCookie("employeeID", data.employeeID, 7); // Setzt den Cookie für 7 Tage
       window.location.href = "../logged/logged.html";
     })
@@ -51,11 +45,10 @@ function login() {
 
 function showBanner(message, isSuccess) {
   var banner = document.getElementById("notification-banner");
-  banner.style.backgroundColor = isSuccess ? "#4CAF50" : "#f44336"; // Green for success, red for failure
+  banner.style.backgroundColor = isSuccess ? "#4CAF50" : "#f44336";
   banner.textContent = message;
   banner.style.display = "block";
 
-  // Automatically hide the banner after 3 seconds
   setTimeout(function () {
     banner.style.display = "none";
   }, 3000);

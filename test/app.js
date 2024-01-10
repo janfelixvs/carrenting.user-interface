@@ -71,7 +71,7 @@ function addRandomReservation() {
             // Generate random dates for the reservation
             var startDate = new Date();
             var endDate = new Date();
-            endDate.setDate(startDate.getDate() + Math.floor(Math.random() * 10) + 1); // Random end date between 1 and 10 days from start
+            endDate.setDate(startDate.getDate() + Math.floor(Math.random() * 10) + 1);
 
             fetch('http://localhost:8081/api/employee/reservation', {
                 method: 'POST',
@@ -79,8 +79,8 @@ function addRandomReservation() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    carID: randomCar.id, // Assuming the car object has an 'id' field
-                    customerID: randomCustomer.id, // Assuming the customer object has an 'id' field
+                    carID: randomCar.id,
+                    customerID: randomCustomer.id,
                     startDate: startDate.toISOString(),
                     endDate: endDate.toISOString()
                 }),

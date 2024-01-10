@@ -33,6 +33,7 @@
                 <li><a href="#gps-tracking" id="gps-trackingLink">GPS Tracking</a></li>
                 <li><a href="#maintenance" id="maintenanceLink">Maintenance</a></li>
                 <li><a href="#reservations" id="reservationsLink">Reservations</a></li>
+                <li><a href="#notify" id="notifyLink">Notify</a></li>
             </ul>
         </div>
         <div class="content-area">
@@ -68,7 +69,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Rows will be added dynamically here -->
                     </tbody>
                 </table>
             </div>
@@ -85,7 +85,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Rows will be added dynamically here -->
                     </tbody>
                 </table>
             </div>
@@ -101,7 +100,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Rows will be added dynamically here -->
                     </tbody>
                 </table>
             </div>
@@ -128,7 +126,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Rows will be added dynamically here -->
                     </tbody>
                 </table>
             </div>
@@ -145,9 +142,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Rows will be added dynamically here -->
                     </tbody>
                 </table>
+            </div>
+            <div class="notify">
+                <h2>Notify Customer</h2>
+                <select id="customerDropdown"></select>
+                <input type="text" id="messageText" placeholder="Enter your message here">
+                <button onclick="sendMessage()">Send Message</button>
             </div>
         </div>
     </div>

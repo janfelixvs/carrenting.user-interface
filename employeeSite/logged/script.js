@@ -43,7 +43,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
         showGpsTable();
     });
 
-
     document.getElementById("maintenanceLink").addEventListener('click', function (event) {
         event.preventDefault();
         hideAllTables();
@@ -59,6 +58,13 @@ document.addEventListener("DOMContentLoaded", (event) => {
         event.preventDefault();
         hideAllTables();
         showReservationTable();
+    });
+
+    document.getElementById("notifyLink").addEventListener('click', function (event) {
+        event.preventDefault();
+        hideAllTables();
+        showNotify();
+        fetchCustomersAndPopulateDropdown();
     });
 
 });
@@ -78,6 +84,7 @@ function hideAllTables() {
     document.querySelector('.gps-table').style.display = 'none';
     document.querySelector('.maintenance-table').style.display = 'none';
     document.querySelector('.reservations-table').style.display = 'none';
+    document.querySelector('.notify').style.display = 'none';
 }
 
 /* -------------------- Dashboard -------------------- */
@@ -88,9 +95,9 @@ function showDashboard() {
 
 // Example data
 let carData = {
-    rented: 50, // Number of cars currently rented
-    available: 100, // Number of cars available for rent
-    maintenance: 20 // Number of cars in maintenance
+    rented: 50,
+    available: 100,
+    maintenance: 20
 };
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -140,15 +147,13 @@ function addNewCarToFleet() {
             return response.json();
         })
         .then(data => {
-            showBanner('Car added successfully', true); // Show success banner
-            // Clear the form
+            showBanner('Car added successfully', true);
             document.getElementById('addCarForm').reset();
-            // Optionally refresh the car list
             fetchCarData();
         })
         .catch(error => {
             console.error('Error adding new car:', error);
-            showBanner('Failed to add car', false); // Show error banner
+            showBanner('Failed to add car', false);
         });
 }
 
@@ -168,7 +173,7 @@ function showCarTable() {
 }
 
 function fetchCarData() {
-    fetch('http://localhost:8081/api/employee/car') // endpoint updated
+    fetch('http://localhost:8081/api/employee/car')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -181,7 +186,7 @@ function fetchCarData() {
 
 function populateCarTable(cars) {
     var table = document.getElementById("carsTable").getElementsByTagName('tbody')[0];
-    table.innerHTML = ""; // Clear existing table rows
+    table.innerHTML = "";
 
     cars.forEach(function (car) {
         var row = table.insertRow();
@@ -215,15 +220,15 @@ function deleteCar(carId) {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            return response.json(); // Assuming the response is JSON
+            return response.json();
         })
         .then(data => {
-            showBanner('Car deleted successfully', true); // Show success banner
-            fetchCarData(); // Refresh the car data after deletion
+            showBanner('Car deleted successfully', true);
+            fetchCarData();
         })
         .catch(error => {
             console.error('Error:', error);
-            showBanner('Failed to delete car', false); // Show error banner
+            showBanner('Failed to delete car', false);
         });
 }
 
@@ -238,7 +243,7 @@ function showCustomerTable() {
 }
 
 function fetchCustomerData() {
-    fetch('http://localhost:8081/api/employee/customer') // Adjust the endpoint as needed
+    fetch('http://localhost:8081/api/employee/customer')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -251,7 +256,7 @@ function fetchCustomerData() {
 
 function populateCustomerTable(customers) {
     var table = document.getElementById("customerTable").getElementsByTagName('tbody')[0];
-    table.innerHTML = ""; // Clear existing table rows
+    table.innerHTML = "";
 
     customers.forEach(function (customer) {
         var row = table.insertRow();
@@ -265,7 +270,7 @@ function populateCustomerTable(customers) {
         firstNameCell.textContent = customer.firstName;
         lastNameCell.textContent = customer.lastName;
         emailCell.textContent = customer.email;
-        passwordCell.textContent = customer.password; // Consider security implications
+        passwordCell.textContent = customer.password;
     });
 }
 
@@ -277,7 +282,7 @@ function showGpsTable() {
 }
 
 function fetchGpsData() {
-    fetch('http://localhost:8081/api/employee/gps/current') // Adjust the endpoint as needed
+    fetch('http://localhost:8081/api/employee/gps/current')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -290,7 +295,7 @@ function fetchGpsData() {
 
 function populateGpsTable(gpsData) {
     var table = document.getElementById("gpsTable").getElementsByTagName('tbody')[0];
-    table.innerHTML = ""; // Clear existing table rows
+    table.innerHTML = "";
 
     gpsData.forEach(function (gps) {
         var row = table.insertRow();
@@ -301,7 +306,7 @@ function populateGpsTable(gpsData) {
 
         trackingIdCell.textContent = gps.trackingId;
         carIdCell.textContent = gps.carId;
-        timestampCell.textContent = gps.timestamp; // Format date if necessary
+        timestampCell.textContent = gps.timestamp;
         locationCell.textContent = gps.location;
     });
 }
@@ -328,14 +333,13 @@ function scheduleMaintenance() {
             return response.json();
         })
         .then(data => {
-            showBanner('Maintenance scheduled successfully', true); // Show success banner
-            // Clear the form
+            showBanner('Maintenance scheduled successfully', true);
             document.getElementById('scheduleMaintenanceForm').reset();
             showMaintenanceTable();
         })
         .catch(error => {
             console.error('Error scheduling maintenance:', error);
-            showBanner('Failed to schedule maintenance', false); // Show error banner
+            showBanner('Failed to schedule maintenance', false);
 
         });
 }
@@ -371,32 +375,26 @@ function fetchMaintenanceData() {
 
 function populateMaintenanceTable(maintenances) {
     var table = document.getElementById("maintenanceTable").getElementsByTagName('tbody')[0];
-    table.innerHTML = ""; // Clear existing table rows
+    table.innerHTML = "";
 
     maintenances.forEach(function (maintenance) {
         var row = table.insertRow();
 
-        // Maintenance ID Cell
         var maintenanceIdCell = row.insertCell(0);
         maintenanceIdCell.textContent = maintenance.maintenanceID;
 
-        // Car ID Cell
         var carIdCell = row.insertCell(1);
         carIdCell.textContent = maintenance.carID;
 
-        // Start Date Cell
         var startDateCell = row.insertCell(2);
         startDateCell.textContent = maintenance.startDate;
 
-        // End Date Cell
         var endDateCell = row.insertCell(3);
         endDateCell.textContent = maintenance.endDate;
 
-        // Status Cell
         var statusCell = row.insertCell(4);
         statusCell.textContent = maintenance.status;
 
-        // Delete Button Cell
         var deleteCell = row.insertCell(5);
         var deleteButton = document.createElement("button");
         deleteButton.textContent = "Delete";
@@ -413,7 +411,7 @@ function deleteMaintenance(maintenanceId) {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            fetchMaintenanceData(); // Refresh the table
+            fetchMaintenanceData();
         })
         .catch(error => console.error('Error deleting maintenance:', error));
 }
@@ -426,7 +424,7 @@ function showReservationTable() {
 }
 
 function fetchReservationData() {
-    fetch('http://localhost:8081/api/employee/reservation') // Adjust the endpoint as needed
+    fetch('http://localhost:8081/api/employee/reservation')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -439,7 +437,7 @@ function fetchReservationData() {
 
 function populateReservationTable(reservations) {
     var table = document.getElementById("reservationTable").getElementsByTagName('tbody')[0];
-    table.innerHTML = ""; // Clear existing table rows
+    table.innerHTML = "";
 
     reservations.forEach(function (reservation) {
         var row = table.insertRow();
@@ -450,8 +448,8 @@ function populateReservationTable(reservations) {
         var carIdCell = row.insertCell(4);
 
         reservationIdCell.textContent = reservation.reservationID;
-        startDateCell.textContent = reservation.startDate; // Format date if necessary
-        endDateCell.textContent = reservation.endDate; // Format date if necessary
+        startDateCell.textContent = reservation.startDate;
+        endDateCell.textContent = reservation.endDate;
         customerIdCell.textContent = reservation.customerID;
         carIdCell.textContent = reservation.carID;
     });
@@ -474,6 +472,12 @@ function getCookie(name) {
     if (parts.length == 2) return parts.pop().split(";").shift();
 }
 
+/* -------------------- Notify -------------------- */
+
+function showNotify() {
+    document.querySelector('.notify').style.display = 'block';
+}
+
 /* -------------------- Logout -------------------- */
 
 function logout() {
@@ -489,12 +493,55 @@ function logout() {
 
 function showBanner(message, isSuccess) {
     var banner = document.getElementById("notification-banner");
-    banner.style.backgroundColor = isSuccess ? "#4CAF50" : "#f44336"; // Green for success, red for failure
+    banner.style.backgroundColor = isSuccess ? "#4CAF50" : "#f44336";
     banner.textContent = message;
     banner.style.display = "block";
 
-    // Automatically hide the banner after 3 seconds
     setTimeout(function () {
         banner.style.display = "none";
     }, 3000);
 }
+
+
+
+/* -------------------- Notify -------------------- */
+
+function fetchCustomersAndPopulateDropdown() {
+    fetch('http://localhost:8081/api/employee/customer')
+        .then(response => response.json())
+        .then(customers => {
+            const dropdown = document.getElementById('customerDropdown');
+            customers.forEach(customer => {
+                let option = document.createElement('option');
+                option.value = customer.id;
+                option.text = `Customer ID: ${customer.id}`;
+                dropdown.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+function sendMessage() {
+    const customerId = document.getElementById('customerDropdown').value;
+    const messageText = document.getElementById('messageText').value;
+
+    fetch('http://localhost:8085/send', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ customerId, messageText }),
+    })
+        .then(response => {
+            if (response.ok) {
+                showBanner('Message sent successfully', true);
+            } else {
+                throw new Error('Failed to send message');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showBanner(error.message, false);
+        });
+}
+

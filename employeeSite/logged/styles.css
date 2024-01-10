@@ -100,9 +100,7 @@ body {
     padding: 10px 20px;
     margin: 5px 10px;
     border-radius: 5px;
-    /* Rounded corners */
     transition: all 0.3s ease;
-    /* Smooth transition for hover effects */
 }
 
 .sidebar ul li a {
@@ -298,7 +296,6 @@ body {
 
 .logout-button:hover {
     background-color: #A52A2A;
-    /* Slightly lighter red on hover */
 }
 
 .notification-banner {

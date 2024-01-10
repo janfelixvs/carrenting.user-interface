@@ -14,9 +14,7 @@ body {
     justify-content: space-between;
     align-items: center;
     width: 80%;
-    /* You can adjust the width as needed */
     max-width: 1200px;
-    /* You can adjust the max-width as needed */
 }
 
 .logo-header {
@@ -27,7 +25,6 @@ body {
 
 .logo {
     max-width: 300px;
-    /* Adjust the size of your logo */
     height: auto;
 }
 
@@ -44,7 +41,6 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 350px;
-    /* Adjust the width of the form as needed */
 }
 
 input[type="text"],
@@ -93,7 +89,7 @@ input[type="password"] {
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: #4CAF50; /* Green background by default */
+    background-color: #4CAF50;
     color: white;
     text-align: center;
     padding: 10px;

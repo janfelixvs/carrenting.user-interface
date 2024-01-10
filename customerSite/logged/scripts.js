@@ -7,64 +7,65 @@ var stompClient = null;
 /* ==================== EventListener ==================== */
 
 
-// Start der Seite - was soll geleaden werden
 document.addEventListener("DOMContentLoaded", (event) => {
 
   updateCustomerName();
 
   var customerId = getCookie("customerId");
   connectWebSocket(getCookie("customerId"));
-});
 
-document.getElementById("homeLink").addEventListener('click', function (event) {
-  event.preventDefault();
-  hideAllTables();
-  showHome();
-});
-
-document.getElementById("reservationLink").addEventListener('click', function (event) {
-  event.preventDefault();
-  hideAllTables();
-  showReservation();
-});
-
-document.getElementById("accountLink").addEventListener('click', function (event) {
-  event.preventDefault();
-  hideAllTables();
-  showAccount();
-});
-
-document.getElementById("updateEmailForm").addEventListener("submit", function (event) {
-  event.preventDefault();
-  var oldEmail = document.getElementById("oldEmail").value;
-  var newEmail = document.getElementById("newEmail").value;
-  updateEmail(oldEmail, newEmail);
-});
-
-document
-  .getElementById("changePasswordForm")
-  .addEventListener("submit", function (event) {
+  document.getElementById("homeLink").addEventListener('click', function (event) {
     event.preventDefault();
-    var email = document.getElementById("email").value;
-    var oldPassword = document.getElementById("oldPassword").value;
-    var newPassword = document.getElementById("newPassword").value;
-    changePassword(email, oldPassword, newPassword);
+    hideAllTables();
+    showHome();
   });
 
-document.getElementById("deleteAccountForm").addEventListener("submit", function (event) {
-  event.preventDefault();
-  var mail = document.getElementById("deleteEmail").value;
-  var pass = document.getElementById("deletePassword").value;
-  deleteAccount(mail, pass);
+  document.getElementById("reservationLink").addEventListener('click', function (event) {
+    event.preventDefault();
+    hideAllTables();
+    showReservation();
+  });
+
+  document.getElementById("accountLink").addEventListener('click', function (event) {
+    event.preventDefault();
+    hideAllTables();
+    showAccount();
+  });
+
+  document.getElementById("updateEmailForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+    var oldEmail = document.getElementById("oldEmail").value;
+    var newEmail = document.getElementById("newEmail").value;
+    updateEmail(oldEmail, newEmail);
+  });
+
+  document
+    .getElementById("changePasswordForm")
+    .addEventListener("submit", function (event) {
+      event.preventDefault();
+      var email = document.getElementById("email").value;
+      var oldPassword = document.getElementById("oldPassword").value;
+      var newPassword = document.getElementById("newPassword").value;
+      changePassword(email, oldPassword, newPassword);
+    });
+
+  document.getElementById("deleteAccountForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+    var mail = document.getElementById("deleteEmail").value;
+    var pass = document.getElementById("deletePassword").value;
+    deleteAccount(mail, pass);
+  });
+
+  document.getElementById("createReservationForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+    var carId = document.getElementById("carSelect").value;
+    var startTime = document.getElementById("startTime").value;
+    var endTime = document.getElementById("endTime").value;
+    createReservation(carId, startTime, endTime);
+  });
 });
 
-document.getElementById("createReservationForm").addEventListener("submit", function (event) {
-  event.preventDefault();
-  var carId = document.getElementById("carSelect").value;
-  var startTime = document.getElementById("startTime").value;
-  var endTime = document.getElementById("endTime").value;
-  createReservation(carId, startTime, endTime);
-});
+
 
 
 /* ==================== Functions ==================== */
@@ -82,7 +83,7 @@ function hideAllTables() {
 }
 
 function updateCustomerName() {
-  var customerId = getCookie("customerId"); // Annahme, dass die Kunden-ID im Cookie 'customerId' gespeichert ist
+  var customerId = getCookie("customerId"); 
   if (customerId) {
     document.getElementById("customerName").textContent = "Customer ID: " + customerId;
   } else {
@@ -137,9 +138,10 @@ function showHome() {
 
 function showReservation() {
   fetchAvailableCars();
-  //loadReservations();
 
+  //loadReservations();
   //document.querySelector('.reservation-menu').style.display = 'block';
+
   var customerId = getCookie("customerId");
 
   fetch(`http://localhost:8082/api/customer/reservation/user/${customerId}`)
@@ -165,7 +167,7 @@ function showReservation() {
 
 function populateAvailableCarsTable(availableCars) {
   var tableBody = document.getElementById("available-cars").getElementsByTagName('tbody')[0];
-  tableBody.innerHTML = ""; // Clear existing rows
+  tableBody.innerHTML = ""; 
 
   availableCars.forEach(function (car) {
     var row = tableBody.insertRow();
@@ -174,21 +176,21 @@ function populateAvailableCarsTable(availableCars) {
     var cell3 = row.insertCell(2);
 
     cell1.innerHTML = car.carID;
-    cell2.innerHTML = car.brand; // Populate with brand
-    cell3.innerHTML = car.model; // Populate with model
+    cell2.innerHTML = car.brand;
+    cell3.innerHTML = car.model;
   });
 }
 
 function populateReservationTable(reservations) {
   var tableBody = document.getElementById("currentReservationsTable").getElementsByTagName('tbody')[0];
-  tableBody.innerHTML = "";  // Clear existing rows
+  tableBody.innerHTML = "";
 
   reservations.forEach(function (reservation) {
     var row = tableBody.insertRow();
     var cell1 = row.insertCell(0);
     var cell2 = row.insertCell(1);
     var cell3 = row.insertCell(2);
-    var cell4 = row.insertCell(3); // New cell for delete button
+    var cell4 = row.insertCell(3); 
 
     cell1.innerHTML = reservation.carID;
     cell2.innerHTML = reservation.startDate;
@@ -199,21 +201,20 @@ function populateReservationTable(reservations) {
     deleteButton.innerHTML = "Delete";
     deleteButton.className = "delete-reservation-button";
     deleteButton.onclick = function () {
-      deleteReservation(reservation.reservationID); // Assuming each reservation has a unique 'id'
+      deleteReservation(reservation.reservationID); 
     };
     cell4.appendChild(deleteButton);
   });
 }
 
 function deleteReservation(reservationId) {
-  // Make an API call to delete the reservation
   fetch(`http://localhost:8082/api/customer/reservation/${reservationId}`, {
     method: "DELETE"
   })
     .then((response) => {
       if (response.ok) {
         console.log("Reservation deleted");
-        showReservation(); // Ruft die Funktion auf, um die Tabelle zu aktualisieren
+        showReservation(); 
       } else {
         console.error("Failed to delete reservation");
       }
@@ -314,11 +315,10 @@ function deleteAccount(email, password) {
 
 function showBanner(message, isSuccess) {
   var banner = document.getElementById("notification-banner");
-  banner.style.backgroundColor = isSuccess ? "#4CAF50" : "#f44336"; // Green for success, red for failure
+  banner.style.backgroundColor = isSuccess ? "#4CAF50" : "#f44336";
   banner.textContent = message;
   banner.style.display = "block";
 
-  // Automatically hide the banner after 3 seconds
   setTimeout(function () {
     banner.style.display = "none";
   }, 3000);
@@ -327,7 +327,7 @@ function showBanner(message, isSuccess) {
 function createReservation(carId, startTime, endTime) {
   var customerId = getCookie("customerId");
   var reservationData = {
-    reservationID: null, // Assuming the server assigns this
+    reservationID: null,
     startDate: startTime,
     endDate: endTime,
     customerID: customerId,
@@ -342,7 +342,7 @@ function createReservation(carId, startTime, endTime) {
     .then((response) => {
       if (response.ok) {
         showBanner("Reservation successful!", true);
-        showReservation(); // Reload reservations
+        showReservation();
       } else {
         throw new Error("Reservation failed");
       }

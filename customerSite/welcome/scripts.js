@@ -1,11 +1,9 @@
-// Function to sign up a new user
 function signUp() {
   var firstName = document.getElementById("first-name").value;
   var lastName = document.getElementById("last-name").value;
   var newEmail = document.getElementById("new-email").value;
   var newPassword = document.getElementById("new-password").value;
 
-  // Constructing the request payload
   var payload = {
     firstName: firstName,
     lastName: lastName,
@@ -13,7 +11,6 @@ function signUp() {
     password: newPassword,
   };
 
-  // Sending a POST request to the signup endpoint
   fetch("http://localhost:8082/api/customer", {
     method: "POST",
     headers: {
@@ -38,11 +35,6 @@ function signUp() {
     });
 }
 
-// Add click event listener to the signup button
-//document.querySelector('.create-account').addEventListener('click', signUp);
-
-// Function to log in a user
-// Funktion zum Setzen eines Cookies
 function setCookie(name, value, days) {
   var expires = "";
   if (days) {
@@ -53,7 +45,6 @@ function setCookie(name, value, days) {
   document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }
 
-// Modifizierte Login-Funktion
 function login() {
   var email = document.getElementById("email").value;
   var password = document.getElementById("password").value;
@@ -79,7 +70,6 @@ function login() {
     })
     .then((data) => {
       console.log("Login successful:", data);
-      // Setzen des Cookies mit der Kundennummer
       setCookie("customerId", data.customerId, 7); // Setzt den Cookie für 7 Tage
       window.location.href = "../logged/logged.html";
     })
@@ -91,11 +81,10 @@ function login() {
 
 function showBanner(message, isSuccess) {
   var banner = document.getElementById("notification-banner");
-  banner.style.backgroundColor = isSuccess ? "#4CAF50" : "#f44336"; // Green for success, red for failure
+  banner.style.backgroundColor = isSuccess ? "#4CAF50" : "#f44336"; 
   banner.textContent = message;
   banner.style.display = "block";
 
-  // Automatically hide the banner after 3 seconds
   setTimeout(function () {
     banner.style.display = "none";
   }, 3000);
