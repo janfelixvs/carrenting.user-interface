@@ -140,23 +140,18 @@ function showReservation() {
   //loadReservations();
 
   //document.querySelector('.reservation-menu').style.display = 'block';
-  // Make an API call to fetch reservations based on the user's ID
   var customerId = getCookie("customerId");
 
   fetch(`http://localhost:8082/api/customer/reservation/user/${customerId}`)
     .then((response) => response.json())
     .then((reservations) => {
-      // Populate the reservation table with the received data
       populateReservationTable(reservations);
 
-      // Make an API call to fetch available cars
       fetch(`http://localhost:8082/api/customer/reservation/availableVehicle`)
         .then((response) => response.json())
         .then((availableCars) => {
-          // Populate the available cars table with the received data
           populateAvailableCarsTable(availableCars);
 
-          // Display the reservation menu
           document.querySelector('.reservation-menu').style.display = 'block';
         })
         .catch((error) => {
