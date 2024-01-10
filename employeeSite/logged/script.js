@@ -507,19 +507,20 @@ function showBanner(message, isSuccess) {
 /* -------------------- Notify -------------------- */
 
 function fetchCustomersAndPopulateDropdown() {
-    fetch('http://localhost:8081/api/employee/customer')
-        .then(response => response.json())
-        .then(customers => {
-            const dropdown = document.getElementById('customerDropdown');
-            customers.forEach(customer => {
-                let option = document.createElement('option');
-                option.value = customer.id;
-                option.text = `Customer ID: ${customer.id}`;
-                dropdown.appendChild(option);
-            });
-        })
-        .catch(error => console.error('Error:', error));
+  fetch('http://localhost:8081/api/employee/customer')
+    .then(response => response.json())
+    .then(customers => {
+      const dropdown = document.getElementById('customerDropdown');
+      customers.forEach(customer => {
+        let option = document.createElement('option');
+        option.value = customer.customerId; // Access the correct property here
+        option.text = `Customer ID: ${customer.customerId}`; // And here
+        dropdown.appendChild(option);
+      });
+    })
+    .catch(error => console.error('Error:', error));
 }
+
 
 function sendMessage() {
     const customerId = document.getElementById('customerDropdown').value;
