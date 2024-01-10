@@ -1,0 +1,26 @@
+###Customer 
+
+##Startseite
+
+1. Login                         ✔️    
+2. Create Account                ✔️    
+
+##Logged
+
+#Account
+Change E-Mail                     ✔️
+Change Password                   ✔️
+Delete Account                    ✔️
+
+#Reservation
+Show all Reservation (resvPerUser)  ✔️
+Show available cars                 ✔️
+Able to reservation a car - select car and time ✔️
+Delete a reservation                ✔️
+
+#GetMessage
+Get a messages of employees       ✔️
+
+
+
+Optional: Enter für Login

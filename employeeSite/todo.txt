@@ -1,0 +1,24 @@
+==Employee==
+
+##Dashboard
+- feed chart with data
+
+##Cars
+- add cars
+- delete cars
+
+##Customers
+- view allCustomers
+
+##GPS
+- tracking by id (location, miles)          ✔️
+
+##Maintenance
+- schedule maintenance
+- find maintenance by car id
+
+##Reservations
+- optional (add/delte reservation)
+
+##Message
+- send a message to the Customer

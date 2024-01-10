@@ -41,22 +41,38 @@
 
             </div>
             <div class="reservation-menu" style="display:none;">
+
+
                 <h2>Reservation Options</h2>
+
                 <section class="reservation-form">
                     <h3 class="section-title">Make a Reservation</h3>
+                    <form id="createReservationForm">
+                        <label for="carSelect">Choose a car:</label>
+                        <select id="carSelect" name="carSelect" required></select>
 
+                        <label for="startTime">Start Time and Date:</label>
+                        <input type="datetime-local" id="startTime" name="startTime" required>
+
+                        <label for="endTime">End Time and Date:</label>
+                        <input type="datetime-local" id="endTime" name="endTime" required>
+
+                        <button type="submit" class="reserve-button">Reserve</button>
+                    </form>
                 </section>
-                <section class="car-list">
+
+                <section class="table-section">
                     <h3 class="section-title">Available Cars</h3>
-                    <table id="available-cars">
+                    <table class="available-cars-table" id="available-cars">
                         <thead>
                             <tr>
                                 <th>Car Number</th>
+                                <th>Brand</th>
+                                <th>Model</th>
                             </tr>
                         </thead>
                         <tbody>
                         </tbody>
-                        </thead>
                     </table>
                 </section>
                 <section class="reservation-list">
@@ -78,6 +94,8 @@
             <div class="account-menu" style="display:none;">
                 <h2>Account Management</h2>
                 <div class="change-info-forms">
+
+
                     <h2>Change personal details</h2>
                     <form id="updateEmailForm">
                         <h2>Update Email</h2>
@@ -87,7 +105,7 @@
                         <label for="newEmail">New Email:</label>
                         <input type="email" id="newEmail" name="newEmail" required placeholder="New E-Mail">
 
-                        <button type="submit" class="change-button">Update Email</button>
+                        <button type="submit" class="change-button" name="change-mail-button">Update Email</button>
                     </form>
 
                     <form id="changePasswordForm">
@@ -118,7 +136,9 @@
                 </div>
             </div>
         </div>
+        <div id="notification-banner" class="notification-banner" style="display: none;"></div>
     </div>
+
 </body>
 
 </html>
