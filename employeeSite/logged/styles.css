@@ -252,6 +252,40 @@ body {
     background-color: #555;
 }
 
+
+
+#reportType {
+    padding: 10px;
+    border: 2px solid #444;
+    border-radius: 4px;
+    background-color: #333;
+    color: white;
+    outline: none;
+    margin-bottom: 10px;
+    width: calc(100% - 20px);
+}
+
+#reportType:focus {
+    border-color: #38bc3c;
+}
+
+#downloadButton {
+    padding: 10px 15px;
+    background-color: #225d0d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: calc(100% - 20px);
+}
+
+#downloadButton:hover {
+    background-color: #3c9e17;
+}
+
+
+
 @media (max-width: 600px) {
     body {
         flex-direction: column;
@@ -279,6 +313,11 @@ body {
     .data-table {
         display: block;
         overflow-x: auto;
+    }
+
+    #reportType,
+    #downloadButton {
+        width: calc(100% - 40px);
     }
 }
 
@@ -308,4 +347,40 @@ body {
     text-align: center;
     padding: 10px;
     z-index: 1000;
+}
+
+
+.delete-button {
+    padding: 10px 15px;
+    background-color: #225d0d;
+    /* Grüne Farbe */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 14px;
+    /* Optional: Schriftgröße anpassen */
+}
+
+.delete-button:hover {
+    background-color: #3c9e17;
+    /* Dunklerer Grünton beim Hover */
+}
+
+
+/* Add this to your existing CSS */
+select {
+    padding: 10px;
+    border: 2px solid #444;
+    border-radius: 4px;
+    background-color: #333;
+    color: white;
+    outline: none;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+select:focus {
+    border-color: #38bc3c;
 }

@@ -2,7 +2,7 @@
 
 ##Dashboard
 - overview chart                            ✔️
-- feed chart with data
+- feed chart with data                      ⭕
 
 ##Cars
 - add cars                                  ✔️
@@ -13,18 +13,22 @@
 - view allCustomers                         ✔️
 
 ##GPS
-- recentLocations and miles  
+- recentLocations and miles
 - show milage and location for each car
 
 ##Maintenance
-- schedule maintenance                      ✔️ (optional: status, dropdown only available)
+- schedule maintenance                      ⭕ (optional: status, dropdown only available)
 - delete maintenance                        ✔️
-- (optional)find maintenance by car id
+- (optional)find maintenance by car id      ⭕
 - getAllMaintenances                        ✔️
 
 ##Reservations
-- optional (add/delte reservation)
+- optional (add/delte reservation)          ⭕
 getAllReservations                          ✔️
 
 ##Message
 - send a message to the Customer            ✔️
+
+##Reporting
+
+- select on of the four databases and download csv 

@@ -34,6 +34,7 @@
                 <li><a href="#maintenance" id="maintenanceLink">Maintenance</a></li>
                 <li><a href="#reservations" id="reservationsLink">Reservations</a></li>
                 <li><a href="#notify" id="notifyLink">Notify</a></li>
+                <li><a href="#report" id="reportLink">Report</a></li>
             </ul>
         </div>
         <div class="content-area">
@@ -107,9 +108,12 @@
                 <div class="schedule-maintenance-form add-car-form">
                     <h3>Schedule Maintenance</h3>
                     <form id="scheduleMaintenanceForm">
-                        <input type="number" id="maintenanceCarId" placeholder="Car ID" required>
+                        <select id="maintenanceCarId" required>
+                            <option value="">Select a Car</option>
+                        </select>
                         <input type="date" id="maintenanceStartDate" placeholder="Start Date" required>
                         <input type="date" id="maintenanceEndDate" placeholder="End Date" required>
+                        <input type="text" id="maintenanceStatus" placeholder="Status" required>
                         <button type="submit">Schedule</button>
                     </form>
                 </div>
@@ -150,6 +154,17 @@
                 <select id="customerDropdown"></select>
                 <input type="text" id="messageText" placeholder="Enter your message here">
                 <button onclick="sendMessage()">Send Message</button>
+            </div>
+            <div class="report" style="display:none;">
+                <h2>Create Reports</h2>
+                <select id="reportType">
+                    <option value="Reservation">Reservation</option>
+                    <option value="Car">Car</option>
+                    <option value="Customer">Customer</option>
+                    <option value="Maintenance">Maintenance</option>
+                </select>
+                <button id="downloadButton" onclick="downloadReport()">Download Report</button>
+
             </div>
         </div>
     </div>

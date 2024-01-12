@@ -3,21 +3,19 @@
 /* ==================== Variables ==================== */
 
 var stompClient = null;
-
-var exampleCars = [
-    { make: 'Toyota', model: 'Corolla', year: 2020, color: 'Red' },
-    { make: 'Honda', model: 'Civic', year: 2019, color: 'Blue' },
-];
+var carStatusChart = null;
 
 /* ==================== EventListener ==================== */
 
 document.addEventListener("DOMContentLoaded", (event) => {
     updateEmployeeName();
+    updateDashboardData();
 
     document.getElementById("DashboardLink").addEventListener('click', function (event) {
         event.preventDefault();
         hideAllTables();
         showDashboard();
+        updateDashboardData();
     });
 
     document.getElementById("carsLink").addEventListener('click', function (event) {
@@ -67,6 +65,14 @@ document.addEventListener("DOMContentLoaded", (event) => {
         fetchCustomersAndPopulateDropdown();
     });
 
+    document.getElementById("reportLink").addEventListener('click', function (event) {
+        event.preventDefault();
+        hideAllTables();
+        showReport();
+    });
+
+
+
 });
 
 /* ==================== Functions ==================== */
@@ -85,6 +91,7 @@ function hideAllTables() {
     document.querySelector('.maintenance-table').style.display = 'none';
     document.querySelector('.reservations-table').style.display = 'none';
     document.querySelector('.notify').style.display = 'none';
+    document.querySelector('.report').style.display = 'none';
 }
 
 /* -------------------- Dashboard -------------------- */
@@ -93,41 +100,62 @@ function showDashboard() {
     document.querySelector('.dashboard').style.display = 'block';
 }
 
-// Example data
-let carData = {
-    rented: 50,
-    available: 100,
-    maintenance: 20
-};
+function updateDashboardData() {
+    Promise.all([
+        fetch('http://localhost:8081/api/employee/reservation').then(res => res.json()),
+        fetch('http://localhost:8081/api/employee/maintenance/all').then(res => res.json()),
+        fetch('http://localhost:8081/api/employee/reservation/availableVehicle').then(res => res.json())
+    ]).then(([reservations, maintenances, availableCars]) => {
+        const reservedCount = reservations.length;
+        const maintenanceCount = maintenances.length;
+        const availableCount = availableCars.length;
 
-document.addEventListener("DOMContentLoaded", function () {
-    var ctx = document.getElementById('carStatusChart').getContext('2d');
-    var carStatusChart = new Chart(ctx, {
+        renderPieChart(reservedCount, maintenanceCount, availableCount);
+    }).catch(error => console.error('Error:', error));
+}
+
+function renderPieChart(reservedCount, maintenanceCount, availableCount) {
+    const ctx = document.getElementById('carStatusChart').getContext('2d');
+
+    // Destroy the existing chart instance if it exists
+    if (carStatusChart != null) {
+        carStatusChart.destroy();
+    }
+
+    // Create a new chart instance
+    carStatusChart = new Chart(ctx, {
         type: 'pie',
         data: {
-            labels: ['Available', 'Rented', 'Maintenance'],
+            labels: ['Reserved', 'In Maintenance', 'Available'],
             datasets: [{
                 label: 'Car Status',
-                data: [carData.available, carData.rented, carData.maintenance],
+                data: [reservedCount, maintenanceCount, availableCount],
                 backgroundColor: [
-                    'white',
-                    'green',
-                    'black'
+                    'rgba(0, 128, 0, 0.2)', // Green
+                    'rgba(0, 0, 0, 0.2)',   // Black 
+                    'rgba(255, 255, 255, 0.2)'  // White
                 ],
                 borderColor: [
-                    'black', // Add border color if white is not visible
-                    'black',
-                    'black'
+                    'rgba(0, 128, 0, 1)', // Green 
+                    'rgba(0, 0, 0, 1)',   // Black
+                    'rgba(255, 255, 255, 1)'  // White
                 ],
                 borderWidth: 1
             }]
         },
         options: {
             responsive: true,
-            maintainAspectRatio: true
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: 'white' // legend text color white
+                    }
+                }
+            }
         }
     });
-});
+}
 
 /* -------------------- Cars -------------------- */
 
@@ -196,7 +224,6 @@ function populateCarTable(cars) {
         var mileageCell = row.insertCell(3);
         var licensePlateCell = row.insertCell(4);
 
-
         carIdCell.textContent = car.carID;
         modelCell.textContent = car.model;
         brandCell.textContent = car.brand;
@@ -206,10 +233,12 @@ function populateCarTable(cars) {
         var deleteCell = row.insertCell(5);
         var deleteButton = document.createElement('button');
         deleteButton.textContent = 'Delete';
+        deleteButton.classList.add("delete-button");
         deleteButton.onclick = function () { deleteCar(car.licensePlate); };
         deleteCell.appendChild(deleteButton);
     });
 }
+
 
 
 function deleteCar(licensePlate) {
@@ -317,13 +346,14 @@ function scheduleMaintenance() {
     const carId = document.getElementById('maintenanceCarId').value;
     const startDate = document.getElementById('maintenanceStartDate').value;
     const endDate = document.getElementById('maintenanceEndDate').value;
-
+    const status = document.getElementById('maintenanceStatus').value;
     const maintenanceData = {
         carID: parseInt(carId),
         startDate: new Date(startDate),
-        endDate: new Date(endDate)
-        //status: 'Scheduled'
+        endDate: new Date(endDate),
+        status: status
     };
+
 
     postMaintenanceData(maintenanceData)
         .then(response => {
@@ -358,7 +388,24 @@ function postMaintenanceData(maintenance) {
 
 function showMaintenanceTable() {
     fetchMaintenanceData();
+    fetchAvailableCarsForMaintenance(); // New function to populate dropdown
     document.querySelector('.maintenance-table').style.display = 'block';
+}
+
+function fetchAvailableCarsForMaintenance() {
+    fetch('http://localhost:8081/api/employee/reservation/availableVehicle')
+        .then(response => response.json())
+        .then(cars => {
+            const dropdown = document.getElementById('maintenanceCarId');
+            dropdown.innerHTML = '<option value="">Select a Car</option>'; // Reset dropdown
+            cars.forEach(car => {
+                let option = document.createElement('option');
+                option.value = car.carID;
+                option.text = `${car.brand} ${car.model} (ID: ${car.carID})`;
+                dropdown.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Error:', error));
 }
 
 function fetchMaintenanceData() {
@@ -398,6 +445,7 @@ function populateMaintenanceTable(maintenances) {
         var deleteCell = row.insertCell(5);
         var deleteButton = document.createElement("button");
         deleteButton.textContent = "Delete";
+        deleteButton.classList.add("delete-button");
         deleteButton.onclick = function () { deleteMaintenance(maintenance.maintenanceID); };
         deleteCell.appendChild(deleteButton);
     });
@@ -478,34 +526,6 @@ function showNotify() {
     document.querySelector('.notify').style.display = 'block';
 }
 
-/* -------------------- Logout -------------------- */
-
-function logout() {
-    if (stompClient !== null) {
-        stompClient.disconnect();
-        console.log("Disconnected");
-    }
-    window.location.href = "../welcome/welcome.html";
-}
-
-/* -------------------- Banner -------------------- */
-
-
-function showBanner(message, isSuccess) {
-    var banner = document.getElementById("notification-banner");
-    banner.style.backgroundColor = isSuccess ? "#4CAF50" : "#f44336";
-    banner.textContent = message;
-    banner.style.display = "block";
-
-    setTimeout(function () {
-        banner.style.display = "none";
-    }, 3000);
-}
-
-
-
-/* -------------------- Notify -------------------- */
-
 function fetchCustomersAndPopulateDropdown() {
     fetch('http://localhost:8081/api/employee/customer')
         .then(response => response.json())
@@ -546,3 +566,48 @@ function sendMessage() {
         });
 }
 
+/* -------------------- Report -------------------- */
+
+function showReport() {
+    document.querySelector('.report').style.display = 'block';
+}
+
+function downloadReport() {
+    var reportType = document.getElementById("reportType").value;
+    fetch(`http://localhost:8081/api/employee/exportData?reportType=${reportType}`)
+        .then(response => response.text())
+        .then(data => {
+            var a = document.createElement("a");
+            a.href = "data:text/csv;charset=utf-8," + encodeURIComponent(data);
+            a.download = `${reportType}-Report.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+
+/* -------------------- Logout -------------------- */
+
+function logout() {
+    if (stompClient !== null) {
+        stompClient.disconnect();
+        console.log("Disconnected");
+    }
+    window.location.href = "../welcome/welcome.html";
+}
+
+/* -------------------- Banner -------------------- */
+
+
+function showBanner(message, isSuccess) {
+    var banner = document.getElementById("notification-banner");
+    banner.style.backgroundColor = isSuccess ? "#4CAF50" : "#f44336";
+    banner.textContent = message;
+    banner.style.display = "block";
+
+    setTimeout(function () {
+        banner.style.display = "none";
+    }, 3000);
+}
