@@ -6,7 +6,7 @@
 
 ##Cars
 - add cars                                  ✔️
-- delete cars                               ❌ (wahrscheinlich fehlerhafte API)
+- delete cars                               ✔️
 - getAllCars                                ✔️
 
 ##Customers
@@ -27,4 +27,4 @@
 getAllReservations                          ✔️
 
 ##Message
-- send a message to the Customer
+- send a message to the Customer            ✔️

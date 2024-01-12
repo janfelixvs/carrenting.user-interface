@@ -212,15 +212,15 @@ function populateCarTable(cars) {
 }
 
 
-function deleteCar(carId) {
-    fetch(`http://localhost:8081/api/employee/car/${carId}`, {
+function deleteCar(licensePlate) {
+    fetch(`http://localhost:8081/api/employee/car/${licensePlate}`, {
         method: 'DELETE'
     })
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            return response.json();
+            return null;
         })
         .then(data => {
             showBanner('Car deleted successfully', true);
@@ -507,18 +507,18 @@ function showBanner(message, isSuccess) {
 /* -------------------- Notify -------------------- */
 
 function fetchCustomersAndPopulateDropdown() {
-  fetch('http://localhost:8081/api/employee/customer')
-    .then(response => response.json())
-    .then(customers => {
-      const dropdown = document.getElementById('customerDropdown');
-      customers.forEach(customer => {
-        let option = document.createElement('option');
-        option.value = customer.customerId; // Access the correct property here
-        option.text = `Customer ID: ${customer.customerId}`; // And here
-        dropdown.appendChild(option);
-      });
-    })
-    .catch(error => console.error('Error:', error));
+    fetch('http://localhost:8081/api/employee/customer')
+        .then(response => response.json())
+        .then(customers => {
+            const dropdown = document.getElementById('customerDropdown');
+            customers.forEach(customer => {
+                let option = document.createElement('option');
+                option.value = customer.customerId; // Access the correct property here
+                option.text = `Customer ID: ${customer.customerId}`; // And here
+                dropdown.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Error:', error));
 }
 
 
@@ -526,7 +526,7 @@ function sendMessage() {
     const customerId = document.getElementById('customerDropdown').value;
     const messageText = document.getElementById('messageText').value;
 
-    fetch('http://localhost:8085/send', {
+    fetch('http://localhost:8081/api/employee/sendMessage', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
