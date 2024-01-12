@@ -1,34 +1,33 @@
 ==Employee==
 
 ##Dashboard
-- overview chart                            ✔️
-- feed chart with data                      ⭕
+- overview chart                                    ✔️
+- feed chart with data                              ✔️
 
 ##Cars
-- add cars                                  ✔️
-- delete cars                               ✔️
-- getAllCars                                ✔️
+- add cars                                          ✔️
+- delete cars                                       ✔️
+- getAllCars                                        ✔️
 
 ##Customers
-- view allCustomers                         ✔️
+- view allCustomers                                 ✔️
 
 ##GPS
-- recentLocations and miles
-- show milage and location for each car
+- show current location of all vehicles             ✔️
+- show milage                                       ⭕
 
 ##Maintenance
-- schedule maintenance                      ⭕ (optional: status, dropdown only available)
-- delete maintenance                        ✔️
-- (optional)find maintenance by car id      ⭕
-- getAllMaintenances                        ✔️
+- schedule maintenance                              ✔️
+- delete maintenance                                ✔️
+- (optional)find maintenance by car id              ✔️
+- getAllMaintenances                                ✔️
 
 ##Reservations
-- optional (add/delte reservation)          ⭕
-getAllReservations                          ✔️
+- optional (add/delte reservation)                  ⭕ (unnoetig)
+getAllReservations                                  ✔️
 
 ##Message
-- send a message to the Customer            ✔️
+- send a message to the Customer                    ✔️
 
 ##Reporting
-
-- select on of the four databases and download csv 
+- select on of the four databases and download csv  ✔️

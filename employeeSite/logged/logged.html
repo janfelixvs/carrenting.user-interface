@@ -4,6 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Car Management</title>
+    <link rel="icon" type="image/png" href="../resources/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../resources/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../resources/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../resources/favicon-16x16.png">
+    <link rel="manifest" href="../resources/site.webmanifest">
     <link rel="stylesheet" href="styles.css" type="text/css">
     <script src="script.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -19,7 +24,7 @@
         <img src="../resources/croppedlogo.png" alt="CarRenting Logo" class="header-logo">
         <h1>Car Management System</h1>
         <div class="header-info">
-            <span class="employeeId" id="employeeID">Laden...</span>
+            <span class="employeeId" id="employeeID">Loading...</span>
             <button class="logout-button" onclick="logout()">Logout</button>
         </div>
     </div>
@@ -47,7 +52,7 @@
 
             </div>
             <div class="car-table" style="display:none;">
-                <div class="add-car-form">
+                <div class="dark-form">
                     <h3>Add Car to Fleet</h3>
                     <form id="addCarForm">
                         <input type="text" id="model" placeholder="Model" required>
@@ -105,7 +110,7 @@
                 </table>
             </div>
             <div class="maintenance-table" style="display:none;">
-                <div class="schedule-maintenance-form add-car-form">
+                <div class="dark-form">
                     <h3>Schedule Maintenance</h3>
                     <form id="scheduleMaintenanceForm">
                         <select id="maintenanceCarId" required>
@@ -113,47 +118,52 @@
                         </select>
                         <input type="date" id="maintenanceStartDate" placeholder="Start Date" required>
                         <input type="date" id="maintenanceEndDate" placeholder="End Date" required>
-                        <input type="text" id="maintenanceStatus" placeholder="Status" required>
+                        <input type="text" id="maintenanceStatus" placeholder="Status" value="Scheduled" required>
                         <button type="submit">Schedule</button>
                     </form>
+
+                    <h2>Maintenance List</h2>
+                    <table id="maintenanceTable" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Maintenance ID</th>
+                                <th>Car ID</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
                 </div>
-                <h2>Maintenance List</h2>
-                <table id="maintenanceTable" class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Maintenance ID</th>
-                            <th>Car ID</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
             </div>
             <div class="reservations-table" style="display:none;">
-                <h2>Reservation List</h2>
-                <table id="reservationTable" class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Reservation ID</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Customer ID</th>
-                            <th>Car ID</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
+                <div class="dark-form">
+                    <h2>Reservation List</h2>
+                    <table id="reservationTable" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Reservation ID</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Customer ID</th>
+                                <th>Car ID</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="notify" style="display:none;">
-                <h2>Notify Customer</h2>
-                <select id="customerDropdown"></select>
-                <input type="text" id="messageText" placeholder="Enter your message here">
-                <button onclick="sendMessage()">Send Message</button>
+                <div class="dark-form">
+                    <h2>Notify Customer</h2>
+                    <select id="customerDropdown"></select>
+                    <input type="text" id="messageText" placeholder="Enter your message here">
+                    <button onclick="sendMessage()">Send Message</button>
+                </div>
             </div>
             <div class="report" style="display:none;">
                 <h2>Create Reports</h2>

@@ -169,30 +169,30 @@ body {
     position: relative;
 }
 
-.add-car-form {
+.dark-form {
     background-color: #2b2b2b;
     padding: 20px;
-    margin: 20px;
+    margin: 10px;
     border-radius: 8px;
 }
 
-.add-car-form h3 {
+.dark-form h3 {
     color: #fff;
     margin-top: 0px;
     margin-bottom: 15px;
     text-align: center;
 }
 
-.add-car-form form {
+.dark-form form {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
     align-items: center;
 }
 
-.add-car-form input[type="text"],
-.add-car-form input[type="date"],
-.add-car-form input[type="number"] {
+.dark-form input[type="text"],
+.dark-form input[type="date"],
+.dark-form input[type="number"] {
     padding: 10px;
     border: 2px solid #444;
     border-radius: 4px;
@@ -201,13 +201,13 @@ body {
     outline: none;
 }
 
-.add-car-form input[type="text"]:focus,
-.add-car-form input[type="date"]:focus,
-.add-car-form input[type="number"]:focus {
+.dark-form input[type="text"]:focus,
+.dark-form input[type="date"]:focus,
+.dark-form input[type="number"]:focus {
     border-color: #38bc3c;
 }
 
-.add-car-form button {
+.dark-form button {
     grid-column: span 2;
     padding: 10px 15px;
     background-color: #225d0d;
@@ -218,7 +218,7 @@ body {
     transition: background-color 0.3s ease;
 }
 
-.add-car-form button:hover {
+.dark-form button:hover {
     background-color: #3c9e17;
 }
 
@@ -323,9 +323,7 @@ body {
 
 .logout-button {
     background-color: #8B0000;
-    /* Dark red background */
     color: white;
-    /* White text for better contrast */
     cursor: pointer;
     border: none;
     border-radius: 5px;
@@ -353,14 +351,12 @@ body {
 .delete-button {
     padding: 10px 15px;
     background-color: #225d0d;
-    /* Grüne Farbe */
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     font-size: 14px;
-    /* Optional: Schriftgröße anpassen */
 }
 
 .delete-button:hover {
@@ -369,7 +365,6 @@ body {
 }
 
 
-/* Add this to your existing CSS */
 select {
     padding: 10px;
     border: 2px solid #444;
