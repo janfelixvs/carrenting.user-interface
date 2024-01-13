@@ -500,7 +500,32 @@ function populateReservationTable(reservations) {
         endDateCell.textContent = reservation.endDate;
         customerIdCell.textContent = reservation.customerID;
         carIdCell.textContent = reservation.carID;
+
+        // Add delete button
+        var deleteCell = row.insertCell(5);
+        var deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete';
+        deleteButton.classList.add('delete-button');
+        deleteButton.onclick = function () { deleteReservation(reservation.reservationID); };
+        deleteCell.appendChild(deleteButton);
     });
+}
+
+function deleteReservation(reservationId) {
+    fetch(`http://localhost:8081/api/employee/reservation/${reservationId}`, {
+        method: 'DELETE'
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            showBanner('Reservation deleted successfully', true);
+            fetchReservationData(); // Refresh the reservation table
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showBanner('Failed to delete reservation', false);
+        });
 }
 
 /* -------------------- Cookies -------------------- */

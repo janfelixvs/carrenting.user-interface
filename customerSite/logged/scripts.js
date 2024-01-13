@@ -83,7 +83,7 @@ function hideAllTables() {
 }
 
 function updateCustomerName() {
-  var customerId = getCookie("customerId"); 
+  var customerId = getCookie("customerId");
   if (customerId) {
     document.getElementById("customerName").textContent = "Customer ID: " + customerId;
   } else {
@@ -134,50 +134,54 @@ function showHome() {
 
 /* -------------------- Reservation -------------------- */
 
-
-
 function showReservation() {
+  fetch(`http://localhost:8082/api/customer/reservation/availableVehicle`)
+    .then((response) => response.json())
+    .then((availableCars) => {
+      populateAvailableCarsTable(availableCars);
+      document.querySelector('.reservation-menu').style.display = 'block';
+    })
   fetchAvailableCars();
-
-  //loadReservations();
-  //document.querySelector('.reservation-menu').style.display = 'block';
 
   var customerId = getCookie("customerId");
 
   fetch(`http://localhost:8082/api/customer/reservation/user/${customerId}`)
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('No reservations found');
+      }
+      return response.json();
+    })
     .then((reservations) => {
       populateReservationTable(reservations);
-
-      fetch(`http://localhost:8082/api/customer/reservation/availableVehicle`)
-        .then((response) => response.json())
-        .then((availableCars) => {
-          populateAvailableCarsTable(availableCars);
-
-          document.querySelector('.reservation-menu').style.display = 'block';
-        })
-        .catch((error) => {
-          console.error("Error fetching available cars:", error);
-        });
     })
     .catch((error) => {
       console.error("Error fetching reservations:", error);
+      populateReservationTable([]);
+    })
+    .finally(() => {
+      document.querySelector('.reservation-menu').style.display = 'block';
     });
 }
 
 function populateAvailableCarsTable(availableCars) {
   var tableBody = document.getElementById("available-cars").getElementsByTagName('tbody')[0];
-  tableBody.innerHTML = ""; 
+  tableBody.innerHTML = "";
 
   availableCars.forEach(function (car) {
     var row = tableBody.insertRow();
     var cell1 = row.insertCell(0);
     var cell2 = row.insertCell(1);
     var cell3 = row.insertCell(2);
+    var cell4 = row.insertCell(3);
 
     cell1.innerHTML = car.carID;
     cell2.innerHTML = car.brand;
     cell3.innerHTML = car.model;
+
+    // Generate a random price per day
+    var randomPricePerDay = Math.floor(Math.random() * 151) + 50; // Random number between 50 and 200
+    cell4.innerHTML = randomPricePerDay + " €/day";
   });
 }
 
@@ -190,7 +194,7 @@ function populateReservationTable(reservations) {
     var cell1 = row.insertCell(0);
     var cell2 = row.insertCell(1);
     var cell3 = row.insertCell(2);
-    var cell4 = row.insertCell(3); 
+    var cell4 = row.insertCell(3);
 
     cell1.innerHTML = reservation.carID;
     cell2.innerHTML = reservation.startDate;
@@ -201,7 +205,7 @@ function populateReservationTable(reservations) {
     deleteButton.innerHTML = "Delete";
     deleteButton.className = "delete-reservation-button";
     deleteButton.onclick = function () {
-      deleteReservation(reservation.reservationID); 
+      deleteReservation(reservation.reservationID);
     };
     cell4.appendChild(deleteButton);
   });
@@ -214,13 +218,55 @@ function deleteReservation(reservationId) {
     .then((response) => {
       if (response.ok) {
         console.log("Reservation deleted");
-        showReservation(); 
+        showReservation();
       } else {
         console.error("Failed to delete reservation");
       }
     })
     .catch((error) => {
       console.error("Error:", error);
+    });
+}
+
+function fetchAvailableCars() {
+  fetch(`http://localhost:8082/api/customer/reservation/availableVehicle`)
+    .then((response) => response.json())
+    .then((cars) => {
+      const carSelect = document.getElementById("carSelect");
+      let options = cars.map(car => `<option value="${car.carID}">${car.carID}</option>`).join('');
+      carSelect.innerHTML = options;
+    })
+    .catch((error) => {
+      console.error("Error fetching cars:", error);
+    });
+}
+
+function createReservation(carId, startTime, endTime) {
+  var customerId = getCookie("customerId");
+  var reservationData = {
+    reservationID: null,
+    startDate: startTime,
+    endDate: endTime,
+    customerID: customerId,
+    carID: carId
+  };
+
+  fetch(`http://localhost:8082/api/customer/reservation`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(reservationData)
+  })
+    .then((response) => {
+      if (response.ok) {
+        showBanner("Reservation successful!", true);
+        showReservation();
+      } else {
+        throw new Error("Reservation failed");
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      showBanner(error.message + ": Reservation failed", false);
     });
 }
 
@@ -322,47 +368,5 @@ function showBanner(message, isSuccess) {
   setTimeout(function () {
     banner.style.display = "none";
   }, 3000);
-}
-
-function createReservation(carId, startTime, endTime) {
-  var customerId = getCookie("customerId");
-  var reservationData = {
-    reservationID: null,
-    startDate: startTime,
-    endDate: endTime,
-    customerID: customerId,
-    carID: carId
-  };
-
-  fetch(`http://localhost:8082/api/customer/reservation`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(reservationData)
-  })
-    .then((response) => {
-      if (response.ok) {
-        showBanner("Reservation successful!", true);
-        showReservation();
-      } else {
-        throw new Error("Reservation failed");
-      }
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-      showBanner(error.message + ": Reservation failed", false);
-    });
-}
-
-function fetchAvailableCars() {
-  fetch(`http://localhost:8082/api/customer/reservation/availableVehicle`)
-    .then((response) => response.json())
-    .then((cars) => {
-      const carSelect = document.getElementById("carSelect");
-      let options = cars.map(car => `<option value="${car.carID}">${car.carID}</option>`).join('');
-      carSelect.innerHTML = options;
-    })
-    .catch((error) => {
-      console.error("Error fetching cars:", error);
-    });
 }
 
